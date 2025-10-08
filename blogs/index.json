@@ -1,18 +1,26 @@
 [
-  {
-    "id": "测试页面",
-    "filename": "测试页面.md",
-    "title": "测试页面",
-    "date": "2025-10-08",
-    "excerpt": "这是一片文章\n\n。。",
-    "tags": "技术"
-  },
-  {
-    "date": "2024-01-15",
-    "filename": "welcome.md",
-    "id": "welcome",
-    "title": "欢迎来到我的博客",
-    "excerpt": "这是我的第一篇博客文章，欢迎阅读！",
-    "tags": "介绍,博客"
-  }
+	{
+		"date":"2025-10-08",
+		"filename":"测试页面.md",
+		"id":"测试页面",
+		"title":"测试页面",
+		"excerpt":"这是一片文章\n\n。。",
+		"tags":"技术"
+	},
+	{
+		"id":"nlob启动",
+		"filename":"nlob启动.md",
+		"title":"Nlob启动",
+		"date":"2025-10-08",
+		"excerpt":"# 正式创建博客！\n\n花了半天时间，搭配AI搞开发真是快！有一些简单的想法很快就实现了。\n\nNotion 香 😋Github 😋白嫖 🤤。服务器，拿来吧你！",
+		"tags":"技术"
+	},
+	{
+		"date":"2024-01-15",
+		"filename":"welcome.md",
+		"id":"welcome",
+		"title":"欢迎来到我的博客",
+		"excerpt":"这是我的第一篇博客文章，欢迎阅读！",
+		"tags":"介绍,博客"
+	}
 ]
