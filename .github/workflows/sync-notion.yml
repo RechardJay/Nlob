@@ -37,7 +37,7 @@ jobs:
     - name: Run Notion Sync
       run: |
         cd notion-sync
-        java -jar target/notion-sync-1.0-SNAPSHOT.jar \
+        java -jar target/Notion-Sync-1.0-SNAPSHOT.jar \
           "${{ secrets.NOTION_TOKEN }}" \
           "${{ secrets.NOTION_DATABASE_ID }}" \
           "../"
