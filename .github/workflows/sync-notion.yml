@@ -11,6 +11,8 @@ on:
 jobs:
   sync-notion:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 添加写入权限
     
     steps:
     # 1. 拉取代码
