@@ -1,6 +1,6 @@
 class MarkdownLoader {
   constructor() {
-    this.blogsPath = "blogs/";
+    this.rawBaseUrl = 'https://raw.githubusercontent.com/rechardjay/Nlob/master/blogs/';
     this.initMarked();
   }
 
@@ -220,7 +220,7 @@ class MarkdownLoader {
     try {
       // 对文件名进行编码，处理中文和特殊字符
       const encodedFilename = encodeURIComponent(filename);
-      const response = await fetch(`${this.blogsPath}${encodedFilename}`);
+      const response = await fetch(`${this.rawBaseUrl}${encodedFilename}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
