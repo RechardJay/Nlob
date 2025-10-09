@@ -3,6 +3,8 @@ package nlob;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import nlob.entity.BlogPostDO;
+import nlob.utils.TimeUtil;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -18,8 +20,6 @@ public class NotionClient {
     private final HttpClient httpClient;
 
     private static final String NOTION_API_BASE = "https://api.notion.com/v1";
-    private static final DateTimeFormatter NOTION_DATE_FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     public NotionClient(String apiToken, String databaseId) {
         this.apiToken = apiToken;
@@ -32,16 +32,28 @@ public class NotionClient {
     /**
      * 查询Notion数据库获取所有博客文章
      */
-    public List<BlogPost> fetchBlogPosts() throws Exception {
+    public List<BlogPostDO> fetchBlogPosts() throws Exception {
         System.out.println("开始从Notion获取博客文章...");
         System.out.println("Database ID: " + databaseId);
 
+        //构建查询条件
+        String timeString = TimeUtil.getUTCBeforeDays(1);
+        String filterCondition = String.format("""
+            {
+                "filter": {
+                    "timestamp": "last_edited_time",
+                    "last_edited_time": {
+                        "on_or_after": "%s"
+                    }
+                }
+            }
+            """, timeString);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(NOTION_API_BASE + "/databases/" + databaseId + "/query"))
                 .header("Authorization", "Bearer " + apiToken)
                 .header("Notion-Version", "2022-06-28")
                 .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString("{}"))
+                .POST(HttpRequest.BodyPublishers.ofString(filterCondition))
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -56,30 +68,30 @@ public class NotionClient {
         JSONObject root = JSON.parseObject(response.body());
         JSONArray results = root.getJSONArray("results");
 
-        List<BlogPost> posts = new ArrayList<>();
+        List<BlogPostDO> posts = new ArrayList<>();
         for (int i = 0; i < results.size(); i++) {
             JSONObject page = results.getJSONObject(i);
-            BlogPost post = parsePage(page);
+            BlogPostDO post = parsePage(page);
             if (post != null) {
                 posts.add(post);
             }
         }
 
-        System.out.println("成功获取 " + posts.size() + " 篇文章");
+        System.out.printf("成功获取,从 %s 到现在，共有%d篇文章",timeString,posts.size());
         return posts;
     }
 
     /**
      * 解析Notion页面数据
      */
-    private BlogPost parsePage(JSONObject page) {
+    private BlogPostDO parsePage(JSONObject page) {
         try {
-            BlogPost post = new BlogPost();
+            BlogPostDO post = new BlogPostDO();
 
             // 设置基本属性
             post.setId(page.getString("id"));
-            post.setCreatedTime(parseDateTime(page.getString("created_time")));
-            post.setLastEditedTime(parseDateTime(page.getString("last_edited_time")));
+            post.setCreatedTime(TimeUtil.parseUTCDateTime2Beijing(page.getString("created_time")));
+            post.setLastEditedTime(TimeUtil.parseUTCDateTime2Beijing(page.getString("last_edited_time")));
 
             // 解析属性
             JSONObject properties = page.getJSONObject("properties");
@@ -95,10 +107,6 @@ public class NotionClient {
             }
             post.setTitle(title);
             System.out.println("文章标题: " + title);
-
-            // 你的数据库没有状态属性，默认所有文章都发布
-            post.setPublished(true);
-            System.out.println("发布状态: 已发布");
 
             // 提取标签 - 使用"多选"属性
             List<String> tags = extractTags(properties);
@@ -182,13 +190,77 @@ public class NotionClient {
     }
 
     /**
-     * 获取页面内容并转换为Markdown
+     * 递归获取页面所有块内容（包括所有嵌套子块）
      */
     private String fetchPageContent(String pageId) throws Exception {
-        System.out.println("获取页面内容: " + pageId);
+        System.out.println("开始递归获取页面内容: " + pageId);
 
+        JSONArray allBlocks = new JSONArray();
+        fetchBlocksRecursive(pageId, allBlocks, 0);
+
+        System.out.println("共获取 " + allBlocks.size() + " 个块（包含嵌套块）");
+
+        MarkdownConverter converter = new MarkdownConverter();
+        return converter.convertBlocksToMarkdown(allBlocks);
+    }
+    /**
+     * 递归获取块及其所有子块
+     */
+    private void fetchBlocksRecursive(String blockId, JSONArray resultBlocks, int depth) throws Exception {
+        if (depth > 10) { // 防止无限递归
+            System.out.println("警告：达到最大递归深度: " + blockId);
+            return;
+        }
+
+        JSONArray children = fetchBlockChildren(blockId);
+
+        for (int i = 0; i < children.size(); i++) {
+            JSONObject block = children.getJSONObject(i);
+
+            // 标记块的层级信息（用于调试和格式化）
+            block.put("_depth", depth);
+            block.put("_parent_id", blockId);
+
+            resultBlocks.add(block);
+
+            // 检查是否需要获取子块
+            if (shouldFetchChildren(block)) {
+                String childBlockId = block.getString("id");
+                String blockType = block.getString("type");
+                System.out.println("深度 " + depth + " - 获取 " + blockType + " 块的子块: " + childBlockId);
+                fetchBlocksRecursive(childBlockId, resultBlocks, depth + 1);
+            }
+        }
+    }
+    /**
+     * 判断是否需要获取子块
+     */
+    private boolean shouldFetchChildren(JSONObject block) {
+        boolean hasChildren = block.getBoolean("has_children");
+        String type = block.getString("type");
+
+        // 这些类型的块通常有子内容
+        return hasChildren && (
+                "toggle".equals(type) ||
+                        "column_list".equals(type) ||
+                        "column".equals(type) ||
+                        "table".equals(type) ||
+                        "bulleted_list_item".equals(type) ||
+                        "numbered_list_item".equals(type) ||
+                        "to_do".equals(type) ||
+                        "quote".equals(type) ||
+                        "callout".equals(type) ||
+                        "child_page".equals(type)  // 注意：child_page 需要特殊处理
+        );
+    }
+
+    /**
+     * 获取指定块的子块
+     */
+    private JSONArray fetchBlockChildren(String blockId) throws Exception {
+        String url = NOTION_API_BASE + "/blocks/" + blockId + "/children?page_size=100";
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(NOTION_API_BASE + "/blocks/" + pageId + "/children?page_size=100"))
+                .uri(URI.create(url))
                 .header("Authorization", "Bearer " + apiToken)
                 .header("Notion-Version", "2022-06-28")
                 .GET()
@@ -197,33 +269,11 @@ public class NotionClient {
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() != 200) {
-            System.err.println("获取页面内容失败: " + response.statusCode() + " - " + response.body());
-            return "";
+            System.err.println("获取块内容失败: " + response.statusCode() + " - " + response.body());
+            return new JSONArray();
         }
 
         JSONObject root = JSON.parseObject(response.body());
-        JSONArray blocks = root.getJSONArray("results");
-
-        MarkdownConverter converter = new MarkdownConverter();
-        String content = converter.convertBlocksToMarkdown(blocks);
-
-        // 如果页面没有内容，添加默认内容
-        if (content == null || content.trim().isEmpty()) {
-            content = "这篇文章还没有内容，请在Notion中添加内容。";
-        }
-
-        return content;
-    }
-
-    /**
-     * 解析日期时间
-     */
-    private LocalDateTime parseDateTime(String dateTimeStr) {
-        try {
-            return LocalDateTime.parse(dateTimeStr, NOTION_DATE_FORMATTER);
-        } catch (Exception e) {
-            System.err.println("日期解析失败: " + dateTimeStr);
-            return LocalDateTime.now();
-        }
+        return root.getJSONArray("results");
     }
 }
