@@ -3,73 +3,98 @@ package nlob;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 public class MarkdownConverter {
 
     public String convertBlocksToMarkdown(JSONArray blocks) {
         StringBuilder markdown = new StringBuilder();
-        Deque<String> openTags = new ArrayDeque<>(); // 用于跟踪需要关闭的标签
 
         for (int i = 0; i < blocks.size(); i++) {
             JSONObject block = blocks.getJSONObject(i);
-            int depth = block.getIntValue("_depth", 0);
-
-            String blockMarkdown = convertBlockToMarkdown(block, depth, openTags);
+            String blockMarkdown = convertBlockWithChildren(block, blocks, i);
             if (blockMarkdown != null && !blockMarkdown.isEmpty()) {
                 markdown.append(blockMarkdown).append("\n\n");
-            }
-        }
-
-        // 关闭所有未关闭的标签
-        while (!openTags.isEmpty()) {
-            String tag = openTags.pop();
-            if ("details".equals(tag)) {
-                markdown.append("</details>\n\n");
             }
         }
 
         return markdown.toString().trim();
     }
 
-    private String convertBlockToMarkdown(JSONObject block, int depth, Deque<String> openTags) {
+    /**
+     * 转换块及其子块
+     */
+    private String convertBlockWithChildren(JSONObject block, JSONArray allBlocks, int currentIndex) {
         String type = block.getString("type");
         if (type == null) return "";
 
         JSONObject content = block.getJSONObject(type);
         if (content == null) return "";
 
-        // 根据深度添加缩进
+        int depth = block.getIntValue("_depth", 0);
         String indent = "  ".repeat(depth);
 
+        // 处理折叠块
+        if ("toggle".equals(type)) {
+            return convertToggleWithChildren(block, allBlocks, currentIndex, indent);
+        }
+
+        // 处理其他块类型
+        return convertSingleBlock(block, indent);
+    }
+
+    /**
+     * 处理折叠块及其子内容
+     */
+    private String convertToggleWithChildren(JSONObject toggleBlock, JSONArray allBlocks, int currentIndex, String indent) {
+        JSONObject content = toggleBlock.getJSONObject("toggle");
+        String toggleText = convertRichText(content.getJSONArray("rich_text"));
+
+        StringBuilder toggleMarkdown = new StringBuilder();
+        toggleMarkdown.append(indent).append("<details>\n");
+        toggleMarkdown.append(indent).append("<summary>").append(toggleText).append("</summary>\n\n");
+
+        // 查找并处理所有子块
+        String toggleId = toggleBlock.getString("id");
+        int toggleDepth = toggleBlock.getIntValue("_depth", 0);
+
+        // 从下一个块开始，找到所有属于这个折叠块的子块
+        int childCount = 0;
+        for (int i = currentIndex + 1; i < allBlocks.size(); i++) {
+            JSONObject childBlock = allBlocks.getJSONObject(i);
+            int childDepth = childBlock.getIntValue("_depth", 0);
+            String parentId = childBlock.getString("_parent_id");
+
+            // 如果遇到同级或更浅的块，说明子块结束了
+            if (childDepth <= toggleDepth) {
+                break;
+            }
+
+            // 如果这个子块属于当前折叠块
+            if (toggleId.equals(parentId) && childDepth == toggleDepth + 1) {
+                String childMarkdown = convertSingleBlock(childBlock, indent + "  ");
+                if (childMarkdown != null && !childMarkdown.isEmpty()) {
+                    toggleMarkdown.append(childMarkdown).append("\n\n");
+                    childCount++;
+                }
+            }
+        }
+
+        toggleMarkdown.append(indent).append("</details>");
+
+        System.out.println("折叠块 '" + toggleText + "' 包含 " + childCount + " 个子块");
+        return toggleMarkdown.toString();
+    }
+
+    /**
+     * 转换单个块（不处理子块）
+     */
+    private String convertSingleBlock(JSONObject block, String indent) {
+        String type = block.getString("type");
+        if (type == null) return "";
+
+        JSONObject content = block.getJSONObject(type);
+        if (content == null) return "";
+
         switch (type) {
-            case "toggle":
-                return convertToggleBlock(content, depth, openTags);
-
-            case "bulleted_list_item":
-                return indent + convertBulletedListItem(content, block.getBoolean("has_children"));
-
-            case "numbered_list_item":
-                return indent + convertNumberedListItem(content, block.getBoolean("has_children"));
-
-            case "to_do":
-                return indent + convertTodoItem(content);
-
-            case "table":
-                return convertTable(content);
-
-            case "table_row":
-                return convertTableRow(content);
-
-            case "child_page":
-                return convertChildPage(content);
-
-            case "column_list":
-            case "column":
-                // 列布局本身不生成内容，由子块处理
-                return "";
-
             case "paragraph":
                 return indent + convertRichText(content.getJSONArray("rich_text"));
 
@@ -82,6 +107,17 @@ public class MarkdownConverter {
             case "heading_3":
                 return indent + "### " + convertRichText(content.getJSONArray("rich_text"));
 
+            case "bulleted_list_item":
+                return indent + "- " + convertRichText(content.getJSONArray("rich_text"));
+
+            case "numbered_list_item":
+                return indent + "1. " + convertRichText(content.getJSONArray("rich_text"));
+
+            case "to_do":
+                boolean checked = content.getBooleanValue("checked");
+                String todoText = convertRichText(content.getJSONArray("rich_text"));
+                return indent + (checked ? "- [x] " : "- [ ] ") + todoText;
+
             case "code":
                 String language = content.getString("language");
                 if (language == null) language = "";
@@ -92,10 +128,23 @@ public class MarkdownConverter {
                 return indent + "> " + convertRichText(content.getJSONArray("rich_text"));
 
             case "callout":
-                return convertCallout(content, indent);
+                String calloutText = convertRichText(content.getJSONArray("rich_text"));
+                return indent + "> 💡 " + calloutText;
+
+            case "child_page":
+                String title = content.getString("title");
+                return indent + "**子页面: " + title + "**";
+
+            case "table_row":
+                return convertTableRow(content);
 
             case "image":
                 return convertImage(content, indent);
+
+            case "column_list":
+            case "column":
+                // 列布局本身不生成内容
+                return "";
 
             default:
                 System.out.println("未处理的块类型: " + type);
@@ -107,81 +156,7 @@ public class MarkdownConverter {
     }
 
     /**
-     * 处理折叠块 (toggle)
-     */
-    private String convertToggleBlock(JSONObject content, int depth, Deque<String> openTags) {
-        String toggleText = convertRichText(content.getJSONArray("rich_text"));
-        openTags.push("details"); // 标记需要关闭的标签
-
-        return "<details>\n<summary>" + toggleText + "</summary>\n\n";
-    }
-
-    /**
-     * 处理项目符号列表项
-     */
-    private String convertBulletedListItem(JSONObject content, boolean hasChildren) {
-        String text = convertRichText(content.getJSONArray("rich_text"));
-        return "- " + text;
-    }
-
-    /**
-     * 处理编号列表项
-     */
-    private String convertNumberedListItem(JSONObject content, boolean hasChildren) {
-        String text = convertRichText(content.getJSONArray("rich_text"));
-        return "1. " + text;
-    }
-
-    /**
-     * 处理待办事项
-     */
-    private String convertTodoItem(JSONObject content) {
-        boolean checked = content.getBooleanValue("checked");
-        String text = convertRichText(content.getJSONArray("rich_text"));
-        return (checked ? "- [x] " : "- [ ] ") + text;
-    }
-
-    /**
-     * 处理标注块 (callout)
-     */
-    private String convertCallout(JSONObject content, String indent) {
-        String text = convertRichText(content.getJSONArray("rich_text"));
-        // 使用引用格式表示标注
-        return indent + "> 💡 " + text;
-    }
-
-    /**
-     * 处理图片
-     */
-    private String convertImage(JSONObject content, String indent) {
-        JSONObject image = content.getJSONObject("image");
-        if (image != null) {
-            String url = image.getString("url");
-            if (url != null) {
-                return indent + "![](" + url + ")";
-            }
-        }
-        return "";
-    }
-
-    /**
-     * 处理子页面
-     */
-    private String convertChildPage(JSONObject content) {
-        String title = content.getString("title");
-        return "**子页面: " + title + "**";
-    }
-
-    /**
-     * 处理表格
-     */
-    private String convertTable(JSONObject content) {
-        // 表格需要特殊处理，这里返回空，由表格行处理具体内容
-        return "";
-    }
-
-    /**
-     * 处理表格行
+     * 转换表格行
      */
     private String convertTableRow(JSONObject content) {
         JSONArray cells = content.getJSONArray("cells");
@@ -197,7 +172,21 @@ public class MarkdownConverter {
     }
 
     /**
-     * 转换富文本（保持不变）
+     * 转换图片
+     */
+    private String convertImage(JSONObject content, String indent) {
+        JSONObject image = content.getJSONObject("image");
+        if (image != null) {
+            String url = image.getString("url");
+            if (url != null) {
+                return indent + "![](" + url + ")";
+            }
+        }
+        return "";
+    }
+
+    /**
+     * 转换富文本
      */
     private String convertRichText(JSONArray richText) {
         if (richText == null || richText.isEmpty()) {

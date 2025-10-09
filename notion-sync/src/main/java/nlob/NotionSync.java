@@ -37,11 +37,11 @@ public class NotionSync {
 
             // 生成索引和Markdown文件
             List<Map<String, Object>> index = loadExistingIndex();
-            Map<String,Integer> IdMap = new HashMap<>();
-            index.forEach(obj ->{
-                IdMap.put(obj.get("id").toString(),Integer.parseInt(obj.get("index").toString()));
-            });
-
+            Map<String,Integer> idMap = new HashMap<>();
+            for(int i=0;i<index.size();i++) {
+                Map<String, Object> objectMap = index.get(i);
+                idMap.put(objectMap.get("id").toString(),i);
+            }
             for (BlogPostDO post : posts) {
                 if (post.getTitle() != null) {
                     // 生成Markdown文件
@@ -50,8 +50,8 @@ public class NotionSync {
                     Files.writeString(filePath, markdown);
                     System.out.println("生成文件: " + post.getFilename());
                     //移除已经存在的文章（更新）
-                    if (IdMap.containsKey(post.getId())) {
-                        index.remove(IdMap.get(post.getId()).intValue());
+                    if (idMap.containsKey(post.getId())) {
+                        index.remove(idMap.get(post.getId()).intValue());
                     }
                     // 添加到索引
                     Map<String, Object> indexEntry = new LinkedHashMap<>();
