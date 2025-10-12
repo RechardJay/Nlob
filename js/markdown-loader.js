@@ -1,6 +1,7 @@
 class MarkdownLoader {
   constructor() {
-    this.rawBaseUrl = 'https://raw.githubusercontent.com/rechardjay/Nlob/master/blogs/';
+    // this.rawBaseUrl = 'https://raw.githubusercontent.com/rechardjay/Nlob/master/blogs/';
+    this.rawBaseUrl = '../blogs/';
     this.initMarked();
   }
 

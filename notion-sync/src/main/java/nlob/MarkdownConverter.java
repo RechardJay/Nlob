@@ -36,6 +36,16 @@ public class MarkdownConverter {
         if ("toggle".equals(type)) {
             return convertToggleWithChildren(block, allBlocks, currentIndex, indent);
         }
+        //处理表格
+        if("table".equals(type)) {
+            JSONArray tables = new JSONArray();
+            JSONObject tableRowObject = allBlocks.getJSONObject(++currentIndex);
+            while (tableRowObject.get("type").equals("table_row")){
+                tables.add(tableRowObject);
+                tableRowObject = allBlocks.getJSONObject(++currentIndex);
+            }
+            return  convertTableRow(tables);
+        }
 
         // 处理其他块类型
         return convertSingleBlock(block, indent);
@@ -135,8 +145,6 @@ public class MarkdownConverter {
                 String title = content.getString("title");
                 return indent + "**子页面: " + title + "**";
 
-            case "table_row":
-                return convertTableRow(content);
 
             case "image":
                 return convertImage(content, indent);
@@ -156,19 +164,35 @@ public class MarkdownConverter {
     }
 
     /**
-     * 转换表格行
+     * 转换表格
      */
-    private String convertTableRow(JSONObject content) {
-        JSONArray cells = content.getJSONArray("cells");
-        StringBuilder row = new StringBuilder("|");
+    private String convertTableRow(JSONArray content) {
+        StringBuilder ans = new StringBuilder();
+        StringBuilder separator = new StringBuilder("|");
+        for (int i = 0; i < content.size(); i++) {
+            JSONObject tableRow = content.getJSONObject(i).getJSONObject("table_row");
+            JSONArray cells = tableRow.getJSONArray("cells");
+            StringBuilder row = new StringBuilder("|");
 
-        for (int i = 0; i < cells.size(); i++) {
-            JSONArray cellText = cells.getJSONArray(i);
-            String cellContent = convertRichText(cellText);
-            row.append(" ").append(cellContent).append(" |");
+            for (int j = 0; j < cells.size(); j++) {
+                JSONArray cellText = cells.getJSONArray(j);
+                String cellContent = convertRichText(cellText);
+                row.append(" ").append(cellContent).append(" |");
+                if(i==0){
+                    separator.append("---|");
+                }
+            }
+            if (row.toString().equals("|")) {
+                return row.toString();
+            }
+            ans.append(row).append("\n");
+            if (i==0){
+                separator.append("\n");
+                ans.append(separator);
+            }
         }
+        return ans.toString();
 
-        return row.toString();
     }
 
     /**

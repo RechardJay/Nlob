@@ -5,27 +5,31 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import nlob.entity.BlogPostDO;
 import nlob.utils.TimeUtil;
+import okhttp3.*;
 
-import java.net.http.HttpClient;
+import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class NotionClient {
+    public static final MediaType json = MediaType.parse("application/json; charset=utf-8");
     private final String apiToken;
     private final String databaseId;
-    private final HttpClient httpClient;
+    private final OkHttpClient httpClient;
 
     private static final String NOTION_API_BASE = "https://api.notion.com/v1";
 
     public NotionClient(String apiToken, String databaseId) {
         this.apiToken = apiToken;
         this.databaseId = databaseId;
-        this.httpClient = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_2)
+        this.httpClient = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true) // 自动重试连接失败
                 .build();
     }
 
@@ -37,48 +41,52 @@ public class NotionClient {
         System.out.println("Database ID: " + databaseId);
 
         //构建查询条件
-        String timeString = TimeUtil.getUTCBeforeDays(1);
+        String timeString = TimeUtil.getUTCBeforeDays(10);
         String filterCondition = String.format("""
-            {
-                "filter": {
-                    "timestamp": "last_edited_time",
-                    "last_edited_time": {
-                        "on_or_after": "%s"
+                {
+                    "filter": {
+                        "timestamp": "last_edited_time",
+                        "last_edited_time": {
+                            "on_or_after": "%s"
+                        }
                     }
                 }
-            }
-            """, timeString);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(NOTION_API_BASE + "/databases/" + databaseId + "/query"))
+                """, timeString);
+        Request request = new Request.Builder()
+                .url(NOTION_API_BASE + "/databases/" + databaseId + "/query")
                 .header("Authorization", "Bearer " + apiToken)
                 .header("Notion-Version", "2022-06-28")
                 .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(filterCondition))
+                .post(RequestBody.create(filterCondition, MediaType.parse("application/json; charset=utf-8")))
                 .build();
 
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-        System.out.println("API响应状态: " + response.statusCode());
-
-        if (response.statusCode() != 200) {
-            System.err.println("API响应内容: " + response.body());
-            throw new RuntimeException("Notion API请求失败: " + response.statusCode() + " - " + response.body());
-        }
-
-        JSONObject root = JSON.parseObject(response.body());
-        JSONArray results = root.getJSONArray("results");
-
-        List<BlogPostDO> posts = new ArrayList<>();
-        for (int i = 0; i < results.size(); i++) {
-            JSONObject page = results.getJSONObject(i);
-            BlogPostDO post = parsePage(page);
-            if (post != null) {
-                posts.add(post);
+        try (Response response = httpClient.newCall(request).execute();) {
+            System.out.println("API响应状态: " + response.code());
+            if (response.code() != 200) {
+                System.err.println("API响应内容: " + response.body());
+                throw new RuntimeException("Notion API请求失败: " + response.code() + " - " + response.body());
             }
-        }
+            if (!response.isSuccessful()) {
+                System.out.println("请求失败，响应头: " + response.headers());
+            }
+            String responseBody = response.body().string();
+            JSONObject root = JSON.parseObject(responseBody);
+            JSONArray results = root.getJSONArray("results");
 
-        System.out.printf("成功获取,从 %s 到现在，共有%d篇文章",timeString,posts.size());
-        return posts;
+            List<BlogPostDO> posts = new ArrayList<>();
+            for (int i = 0; i < results.size(); i++) {
+                JSONObject page = results.getJSONObject(i);
+                BlogPostDO post = parsePage(page);
+                if (post != null) {
+                    posts.add(post);
+                }
+            }
+
+            System.out.printf("成功获取,从 %s 到现在，共有%d篇文章", timeString, posts.size());
+            return posts;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -203,6 +211,7 @@ public class NotionClient {
         MarkdownConverter converter = new MarkdownConverter();
         return converter.convertBlocksToMarkdown(allBlocks);
     }
+
     /**
      * 递归获取块及其所有子块
      */
@@ -232,6 +241,7 @@ public class NotionClient {
             }
         }
     }
+
     /**
      * 判断是否需要获取子块
      */
@@ -259,21 +269,21 @@ public class NotionClient {
      */
     private JSONArray fetchBlockChildren(String blockId) throws Exception {
         String url = NOTION_API_BASE + "/blocks/" + blockId + "/children?page_size=100";
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
+        Request request = new Request.Builder()
+                .url(url)
                 .header("Authorization", "Bearer " + apiToken)
                 .header("Notion-Version", "2022-06-28")
-                .GET()
+                .get()
                 .build();
-
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-        if (response.statusCode() != 200) {
-            System.err.println("获取块内容失败: " + response.statusCode() + " - " + response.body());
-            return new JSONArray();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (response.code() != 200) {
+                System.err.println("获取块内容失败: " + response.code() + " - " + response.body());
+                return new JSONArray();
+            }
+            JSONObject root = JSON.parseObject(response.body().string());
+            return root.getJSONArray("results");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        JSONObject root = JSON.parseObject(response.body());
-        return root.getJSONArray("results");
     }
 }
