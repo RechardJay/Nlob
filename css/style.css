@@ -13,7 +13,7 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1024px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -285,6 +285,14 @@ body {
   border-radius: 0 5px 5px 0;
   font-style: italic;
   color: #555;
+}
+.blog-content table{
+  border-collapse: collapse;
+}
+.blog-content th, .blog-content td {
+  border: 1px solid #000000;
+  padding: 0.15rem;
+  text-align: auto;
 }
 
 /* 代码高亮样式 */
