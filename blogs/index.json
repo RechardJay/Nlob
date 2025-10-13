@@ -1,5 +1,14 @@
 [
 	{
+		"id":"28a581e7-4ffc-80d0-8797-fd95a30ef8b5",
+		"filename":"jdk内置httpclient缺陷-愚蠢的标准.md",
+		"title":"JDK内置httpClient缺陷-愚蠢的标准",
+		"date":"2025-10-12",
+		"update":"2025-10-12",
+		"excerpt":"写Nlob时，经常（99%的概率）在请求NotionAPI时爆出一个：\n\n```plain text...",
+		"tags":"技术,避坑"
+	},
+	{
 		"id":"288581e7-4ffc-8006-afac-c4a083b7ad2d",
 		"filename":"警惕编程语言饭圈.md",
 		"title":"警惕编程语言饭圈",
@@ -9,13 +18,13 @@
 		"tags":"技术"
 	},
 	{
-		"id":"286581e7-4ffc-80b8-b0d3-e73d2abc0cd7",
-		"filename":"nlob启动.md",
-		"title":"Nlob启动",
 		"date":"2025-10-08",
-		"update":"2025-10-08",
-		"excerpt":"# 正式创建博客！\n\n花了半天时间，搭配AI搞开发真是快！有一些简单的想法很快就实现了。\n\nNoti...",
-		"tags":"技术"
+		"filename":"测试页面.md",
+		"update":"2025-10-09",
+		"id":"286581e7-4ffc-80e0-998b-fb3554e4b1d4",
+		"title":"测试页面",
+		"excerpt":"这是一片文章。\n\n。。\n\n# 一级标题\n\n- list\n\n1. num list\n\n- [ ] 待办...",
+		"tags":"技术,博客"
 	},
 	{
 		"id":"286581e7-4ffc-80e0-998b-fb3554e4b1d4",
