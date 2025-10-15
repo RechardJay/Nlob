@@ -27,29 +27,11 @@
 		"tags":"技术"
 	},
 	{
+		"id":"286581e7-4ffc-80e0-998b-fb3554e4b1d4",
 		"date":"2025-10-08",
 		"filename":"测试页面.md",
 		"update":"2025-10-09",
-		"id":"286581e7-4ffc-80e0-998b-fb3554e4b1d4",
 		"title":"测试页面",
-		"excerpt":"这是一片文章。\n\n。。\n\n# 一级标题\n\n- list\n\n1. num list\n\n- [ ] 待办...",
-		"tags":"技术,博客"
-	},
-	{
-		"date":"2025-10-08",
-		"filename":"测试页面.md",
-		"update":"2025-10-09",
-		"id":"286581e7-4ffc-80e0-998b-fb3554e4b1d4",
-		"title":"测试页面",
-		"excerpt":"这是一片文章。\n\n。。\n\n# 一级标题\n\n- list\n\n1. num list\n\n- [ ] 待办...",
-		"tags":"技术,博客"
-	},
-	{
-		"id":"286581e7-4ffc-80e0-998b-fb3554e4b1d4",
-		"filename":"测试页面.md",
-		"title":"测试页面",
-		"date":"2025-10-08",
-		"update":"2025-10-09",
 		"excerpt":"这是一片文章。\n\n。。\n\n# 一级标题\n\n- list\n\n1. num list\n\n- [ ] 待办...",
 		"tags":"技术,博客"
 	}
