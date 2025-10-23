@@ -18,11 +18,11 @@
 		"tags":"技术"
 	},
 	{
-		"id":"28a581e7-4ffc-80d0-8797-fd95a30ef8b5",
-		"filename":"jdk内置httpclient缺陷-愚蠢的标准.md",
-		"title":"JDK内置httpClient缺陷-愚蠢的标准",
 		"date":"2025-10-12",
+		"filename":"jdk内置httpclient缺陷-愚蠢的标准.md",
 		"update":"2025-10-12",
+		"id":"28a581e7-4ffc-80d0-8797-fd95a30ef8b5",
+		"title":"JDK内置httpClient缺陷-愚蠢的标准",
 		"excerpt":"写Nlob时，经常（99%的概率）在请求NotionAPI时爆出一个：\n\n```plain text...",
 		"tags":"技术,避坑"
 	},
