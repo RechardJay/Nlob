@@ -120,6 +120,9 @@ public class NotionClient {
             List<String> tags = extractTags(properties);
             post.setTags(tags);
             System.out.println("文章标签: " + tags);
+            //提取合集归属（可能为null）- 使用 "合集属性"
+            String collection = extractCollectionName(properties);
+            post.setCollection(collection);
 
             // 获取页面内容
             String content = fetchPageContent(post.getId());
@@ -196,7 +199,18 @@ public class NotionClient {
 
         return tags;
     }
-
+    /**
+     * 提取合集归属（可能为null）- 使用 "合集属性"
+     */
+    private String extractCollectionName(JSONObject properties){
+        String result = null;
+        JSONObject collectionJsonObject = properties.getJSONObject("合集").getJSONObject("select");
+        if(collectionJsonObject!=null){
+            Object selectName = collectionJsonObject.getOrDefault("name","?");
+            result = String.valueOf(selectName);
+        }
+        return result;
+    }
     /**
      * 递归获取页面所有块内容（包括所有嵌套子块）
      */

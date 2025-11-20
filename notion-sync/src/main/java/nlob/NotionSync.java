@@ -60,6 +60,10 @@ public class NotionSync {
                     indexEntry.put("title", post.getTitle());
                     indexEntry.put("date", post.getCreatedTime().format(DATE_FORMATTER));
                     indexEntry.put("update",post.getLastEditedTime().format(DATE_FORMATTER) );
+                    String collection = post.getCollection();
+                    if(collection!=null){
+                        indexEntry.put("collection",collection);
+                    }
 
                     // 处理摘要
                     String excerpt = post.getExcerpt();

@@ -8,7 +8,8 @@ dependency-reduced-pom.xml
 *.iws
 *.iml
 *.ipr
-
+### 测试目录
+src/test
 ### Eclipse ###
 .apt_generated
 .classpath

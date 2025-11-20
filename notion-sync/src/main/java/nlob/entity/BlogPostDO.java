@@ -14,6 +14,7 @@ public class BlogPostDO {
     private LocalDateTime createdTime;
     private LocalDateTime lastEditedTime;
     private String excerpt;
+    private String collection;
     private List<String> tags;
 
     public BlogPostDO() {

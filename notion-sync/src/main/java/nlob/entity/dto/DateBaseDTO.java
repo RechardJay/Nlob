@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 数据库查询的返回结果
+ * 没有用到，直接使用JSONObject解析数据库列表对象
  */
 @NoArgsConstructor
 @Data
@@ -57,6 +58,7 @@ public class DateBaseDTO {
         public static class PropertiesDTO {
             private 多选DTO 多选;
             private 名称DTO 名称;
+            private 合集DTO 合集;
 
             @NoArgsConstructor
             @Data
@@ -108,6 +110,13 @@ public class DateBaseDTO {
                         private String color;
                     }
                 }
+            }
+            @NoArgsConstructor
+            @Data
+            public static class 合集DTO {
+                private String id;
+                private String type;
+                private String select;
             }
         }
     }
