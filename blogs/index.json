@@ -1,5 +1,13 @@
 [
 	{
+		"id":"2b0581e7-4ffc-8083-932a-db54842a0164",
+		"filename":"docker的研究-配置吐槽.md",
+		"title":"Docker的研究（配置吐槽）",
+		"date":"2025-11-19",
+		"update":"2025-11-19",
+		"excerpt":"个人用户在日常桌面环境（Ubuntu24.04 LTS）使用Docker指南\n\n# 在Ubuntu安..."
+	},
+	{
 		"date":"2025-10-30",
 		"filename":"计算机名著导读-深入理解计算机系统-cs-app.md",
 		"update":"2025-10-30",
