@@ -20,19 +20,15 @@
     </header>
 
     <main class="container">
-      <section class="hero">
-        <h1>文章合集</h1>
-        <p>按标签分类浏览所有文章</p>
-      </section>
-
+      <button class="tag-btn active" data-tag="all">全部</button>
       <section class="collection-section">
         <div class="tag-filter">
-          <button class="tag-btn active" data-tag="all">全部</button>
+          <div class="tag-btn" data-tag="all">标签
           <div id="tag-buttons-container">
             <!-- 标签按钮将通过JS动态加载 -->
           </div>
         </div>
-
+      </div>
         <div id="collection-container">
           <!-- 合集内容将通过JS动态加载 -->
           <div class="loading">加载中...</div>
