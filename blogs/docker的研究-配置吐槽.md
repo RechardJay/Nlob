@@ -1,6 +1,7 @@
 ---
 title: "Docker的研究（配置吐槽）"
 date: "2025-11-19"
+tags: "技术"
 ---
 
 个人用户在日常桌面环境（Ubuntu24.04 LTS）使用Docker指南
