@@ -27,6 +27,15 @@
 		"tags":"技术,Linux,避坑"
 	},
 	{
+		"date":"2025-11-20",
+		"filename":"arch安装-vmware-in-ubuntu.md",
+		"update":"2025-11-21",
+		"id":"2b1581e7-4ffc-809f-a540-e3963c11afbf",
+		"title":"Arch安装 （VMWare in Ubuntu）",
+		"excerpt":"前言：折腾了一下午总算成功了，装系统确实不是什么难事（只要愿意花时间）。相关的教程很多（Arch的一...",
+		"tags":"技术,Linux,避坑"
+	},
+	{
 		"id":"2b1581e7-4ffc-8025-833a-c6cb5cc88bd1",
 		"filename":"合集测试-2.md",
 		"title":"合集测试-2",
@@ -70,15 +79,6 @@
 		"title":"计算机名著导读—深入理解计算机系统（CS：APP）",
 		"excerpt":"这是计算机界的老牌名著了。大学的所有专业都会有一门导论课让新生快速上路，以对未来数年的学习生涯和内容...",
 		"tags":"读书"
-	},
-	{
-		"date":"2025-10-12",
-		"filename":"jdk内置httpclient缺陷-愚蠢的标准.md",
-		"update":"2025-10-12",
-		"id":"28a581e7-4ffc-80d0-8797-fd95a30ef8b5",
-		"title":"JDK内置httpClient缺陷-愚蠢的标准",
-		"excerpt":"写Nlob时，经常（99%的概率）在请求NotionAPI时爆出一个：\n\n```plain text...",
-		"tags":"技术,避坑"
 	},
 	{
 		"id":"288581e7-4ffc-8006-afac-c4a083b7ad2d",
