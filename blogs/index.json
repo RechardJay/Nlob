@@ -54,6 +54,15 @@
 		"tags":"技术,Linux,避坑"
 	},
 	{
+		"date":"2025-11-20",
+		"filename":"arch安装-vmware-in-ubuntu.md",
+		"update":"2025-11-21",
+		"id":"2b1581e7-4ffc-809f-a540-e3963c11afbf",
+		"title":"Arch安装 （VMWare in Ubuntu）",
+		"excerpt":"前言：折腾了一下午总算成功了，装系统确实不是什么难事（只要愿意花时间）。相关的教程很多（Arch的一...",
+		"tags":"技术,Linux,避坑"
+	},
+	{
 		"id":"2b1581e7-4ffc-8025-833a-c6cb5cc88bd1",
 		"filename":"合集测试-2.md",
 		"title":"合集测试-2",
@@ -115,14 +124,5 @@
 		"update":"2025-11-23",
 		"excerpt":"开撕、站队、塌房。技术圈里也有人爱玩这一套？搞技术的人相对来说更加理智客观一些，但无奈出校崇拜是人类...",
 		"tags":"技术"
-	},
-	{
-		"id":"286581e7-4ffc-80e0-998b-fb3554e4b1d4",
-		"filename":"测试页面.md",
-		"title":"测试页面",
-		"date":"2025-10-08",
-		"update":"2025-11-20",
-		"excerpt":"这是一片文章。\n\n。。\n\n# 一级标题\n\n- list\n\n1. num list\n\n- [ ] 待办...",
-		"tags":"测试"
 	}
 ]
