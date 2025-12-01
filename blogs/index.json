@@ -81,38 +81,38 @@
 		"tags":"技术,Linux,避坑"
 	},
 	{
-		"id":"2b1581e7-4ffc-8025-833a-c6cb5cc88bd1",
-		"filename":"合集测试-2.md",
-		"title":"合集测试-2",
 		"date":"2025-11-20",
+		"filename":"合集测试-2.md",
 		"update":"2025-11-20",
+		"id":"2b1581e7-4ffc-8025-833a-c6cb5cc88bd1",
+		"title":"合集测试-2",
 		"excerpt":"第二篇测试合集",
 		"tags":"测试"
 	},
 	{
-		"id":"2b1581e7-4ffc-809f-a540-e3963c11afbf",
-		"filename":"arch安装-vmware-in-ubuntu.md",
-		"title":"Arch安装 （VMWare in Ubuntu）",
 		"date":"2025-11-20",
+		"filename":"arch安装-vmware-in-ubuntu.md",
 		"update":"2025-11-21",
+		"id":"2b1581e7-4ffc-809f-a540-e3963c11afbf",
+		"title":"Arch安装 （VMWare in Ubuntu）",
 		"excerpt":"前言：折腾了一下午总算成功了，装系统确实不是什么难事（只要愿意花时间）。相关的教程很多（Arch的一...",
 		"tags":"技术,Linux,避坑"
 	},
 	{
-		"id":"2b1581e7-4ffc-80dc-892e-d6c7bbea00fa",
-		"filename":"令人迷惑的引用-指针永远不会安全.md",
-		"title":"令人迷惑的引用-指针永远不会安全",
 		"date":"2025-11-20",
+		"filename":"令人迷惑的引用-指针永远不会安全.md",
 		"update":"2025-11-20",
+		"id":"2b1581e7-4ffc-80dc-892e-d6c7bbea00fa",
+		"title":"令人迷惑的引用-指针永远不会安全",
 		"excerpt":"Java发展自C++，没有了指针，取而代之的是引用。用官方的说法是：引用是安全的指针。\n\n这一步好的...",
 		"tags":"避坑"
 	},
 	{
-		"id":"2b0581e7-4ffc-8083-932a-db54842a0164",
-		"filename":"docker的研究-配置吐槽.md",
-		"title":"Docker的研究（配置吐槽）",
 		"date":"2025-11-19",
+		"filename":"docker的研究-配置吐槽.md",
 		"update":"2025-11-20",
+		"id":"2b0581e7-4ffc-8083-932a-db54842a0164",
+		"title":"Docker的研究（配置吐槽）",
 		"excerpt":"个人用户在日常桌面环境（Ubuntu24.04 LTS）使用Docker指南\n\n# 在Ubuntu安...",
 		"tags":"技术"
 	},
