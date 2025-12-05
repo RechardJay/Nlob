@@ -1,5 +1,14 @@
 [
 	{
+		"id":"2bf581e7-4ffc-80de-add5-c801f6370189",
+		"filename":"c语言包管理漫谈.md",
+		"title":"C语言包管理漫谈",
+		"date":"2025-12-04",
+		"update":"2025-12-04",
+		"excerpt":"任何语言都离不开包管理，C也不例外。\n\n谈起包包管理器、构建工具。我自然地想起Java的maven；...",
+		"tags":"技术,Linux"
+	},
+	{
 		"date":"2025-11-20",
 		"filename":"arch安装-vmware-in-ubuntu.md",
 		"update":"2025-11-21",
