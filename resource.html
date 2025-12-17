@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>资源 - Jay's Blog</title>
+    <link rel="icon" href="resource\lemt.jpg" type="jpg" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <h1 class="logo">Jay的技术博客</h1>
+        <nav class="nav">
+          <a href="index.html">首页</a>
+          <a href="collection.html">合集</a>
+          <a href="resource.html">资源</a>
+          <a href="index.html#about-popup">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="hero">
+        <h2>资源链接</h2>
+        <p>探索有用的工具、文档和相关链接</p>
+      </div>
+
+      <div id="resource-grid" class="resource-grid">
+        <!-- 资源将通过JS动态加载 -->
+        <div class="loading">加载中...</div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>&copy;Nlob 基于 GitHub Pages+Notion</p>
+      </div>
+    </footer>
+
+    <script src="res/linkResources.js"></script>
+    <script>
+      // 动态生成资源卡片
+      if (typeof linkResourcesData !== 'undefined') {
+        const grid = document.getElementById('resource-grid');
+        grid.innerHTML = '';
+
+        linkResourcesData.forEach(category => {
+          const card = document.createElement('section');
+          card.className = 'resource-card';
+
+          const title = document.createElement('h3');
+          title.textContent = category.title;
+          card.appendChild(title);
+
+          const ul = document.createElement('ul');
+          ul.className = 'resource-list';
+
+          category.list.forEach(item => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = item.link;
+            
+            // 判断是否为外链
+            if (item.link.startsWith('http')) {
+              a.target = '_blank';
+            }
+            
+            // 显示description或link作为文本
+            a.textContent = item.description || item.link;
+            
+            li.appendChild(a);
+            ul.appendChild(li);
+          });
+
+          card.appendChild(ul);
+          grid.appendChild(card);
+        });
+      }
+    </script>
+  </body>
+</html>
