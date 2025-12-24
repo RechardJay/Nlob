@@ -9,11 +9,11 @@
 		"tags":"技术"
 	},
 	{
-		"id":"2c8581e7-4ffc-8067-8b45-c485da686f06",
-		"filename":"符号链接和dotfiles.md",
-		"title":"符号链接和dotfiles",
 		"date":"2025-12-13",
+		"filename":"符号链接和dotfiles.md",
 		"update":"2025-12-13",
+		"id":"2c8581e7-4ffc-8067-8b45-c485da686f06",
+		"title":"符号链接和dotfiles",
 		"excerpt":"# 起因：硬编码的配置文件\n\n目录会越来越乱，即使你有意的维护和整理。\n\n很多开发工具都会硬编码一些...",
 		"tags":"技术"
 	},
