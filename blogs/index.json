@@ -27,6 +27,15 @@
 		"excerpt":"伟大的管程出现了，这是一种高级同步工具，也是最NB最流行的同步手段。\n\n<details>\n<sum..."
 	},
 	{
+		"date":"2026-01-17",
+		"filename":"管程-monitor.md",
+		"update":"2026-01-17",
+		"id":"2ea581e7-4ffc-808e-b21d-cc971c21cbed",
+		"collection":"深入理解并发",
+		"title":"管程 Monitor",
+		"excerpt":"伟大的管程出现了，这是一种高级同步工具，也是最NB最流行的同步手段。\n\n<details>\n<sum..."
+	},
+	{
 		"id":"2ea581e7-4ffc-806a-a4f8-dc63a2d4f0e9",
 		"filename":"互斥的手段.md",
 		"title":"互斥的手段",
@@ -57,15 +66,6 @@
 	},
 	{
 		"date":"2025-11-20",
-		"filename":"合集测试-2.md",
-		"update":"2025-11-20",
-		"id":"2b1581e7-4ffc-8025-833a-c6cb5cc88bd1",
-		"title":"合集测试-2",
-		"excerpt":"第二篇测试合集",
-		"tags":"测试"
-	},
-	{
-		"date":"2025-11-20",
 		"filename":"arch安装-vmware-in-ubuntu.md",
 		"update":"2025-11-21",
 		"id":"2b1581e7-4ffc-809f-a540-e3963c11afbf",
@@ -83,11 +83,11 @@
 		"tags":"避坑"
 	},
 	{
-		"date":"2025-11-19",
-		"filename":"docker的研究-配置吐槽.md",
-		"update":"2025-11-20",
 		"id":"2b0581e7-4ffc-8083-932a-db54842a0164",
+		"filename":"docker的研究-配置吐槽.md",
 		"title":"Docker的研究（配置吐槽）",
+		"date":"2025-11-19",
+		"update":"2026-01-20",
 		"excerpt":"个人用户在日常桌面环境（Ubuntu24.04 LTS）使用Docker指南\n\n# 在Ubuntu安...",
 		"tags":"技术"
 	},
