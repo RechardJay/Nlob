@@ -20,5 +20,14 @@ const linkResourcesData = [
                 description: "Kotlin官方中文文档"
             }
         ]
+    },
+    {
+        title: "实用工具",
+        list: [
+            {
+                link: "https://quickref.cn/",
+                description:"程序员速查手册"
+            }
+        ]
     }
 ]
