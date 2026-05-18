@@ -10,6 +10,16 @@
 		"tags":"避坑,msys2"
 	},
 	{
+		"date":"2026-05-14",
+		"filename":"msys2-the-best-bash-shell-for-windows.md",
+		"update":"2026-05-16",
+		"id":"360581e7-4ffc-80d2-89d7-db4d17489d50",
+		"collection":"msys2",
+		"title":"MSYS2 — the Best Bash/Shell for Windows",
+		"excerpt":"用MSYS2 在Windows创建一个完美的终端环境，拒绝cmd、powershell、虚拟机、WS...",
+		"tags":"msys2,shell"
+	},
+	{
 		"id":"360581e7-4ffc-80d2-89d7-db4d17489d50",
 		"filename":"msys2-the-best-bash-shell-for-windows.md",
 		"title":"MSYS2 — the Best Bash/Shell for Windows",
@@ -18,15 +28,6 @@
 		"collection":"msys2",
 		"excerpt":"用MSYS2 在Windows创建一个完美的终端环境，拒绝cmd、powershell、虚拟机、WS...",
 		"tags":"msys2,shell"
-	},
-	{
-		"date":"2026-03-21",
-		"filename":"关于设计模式的一切.md",
-		"update":"2026-03-21",
-		"id":"32a581e7-4ffc-8078-a825-e96e2d00a491",
-		"title":"关于设计模式的一切",
-		"excerpt":"所有设计模式都在解决一件事——解耦。无论是应对复杂的业务迭代、冗余的代码重构，还是提升系统的可扩展性...",
-		"tags":"技术"
 	},
 	{
 		"date":"2026-02-15",
