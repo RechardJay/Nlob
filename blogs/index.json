@@ -20,6 +20,16 @@
 		"tags":"msys2,shell"
 	},
 	{
+		"date":"2026-05-14",
+		"filename":"msys2-the-best-bash-shell-for-windows.md",
+		"update":"2026-05-16",
+		"id":"360581e7-4ffc-80d2-89d7-db4d17489d50",
+		"collection":"msys2",
+		"title":"MSYS2 — the Best Bash/Shell for Windows",
+		"excerpt":"用MSYS2 在Windows创建一个完美的终端环境，拒绝cmd、powershell、虚拟机、WS...",
+		"tags":"msys2,shell"
+	},
+	{
 		"id":"360581e7-4ffc-80d2-89d7-db4d17489d50",
 		"filename":"msys2-the-best-bash-shell-for-windows.md",
 		"title":"MSYS2 — the Best Bash/Shell for Windows",
@@ -28,15 +38,6 @@
 		"collection":"msys2",
 		"excerpt":"用MSYS2 在Windows创建一个完美的终端环境，拒绝cmd、powershell、虚拟机、WS...",
 		"tags":"msys2,shell"
-	},
-	{
-		"date":"2026-02-15",
-		"filename":"优质软件归档.md",
-		"update":"2026-02-15",
-		"id":"308581e7-4ffc-8017-a886-ef2fc8bee516",
-		"title":"优质软件归档",
-		"excerpt":"解压缩\n\n科学上网",
-		"tags":"Linux"
 	},
 	{
 		"date":"2026-01-17",
