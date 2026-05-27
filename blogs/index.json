@@ -1,11 +1,11 @@
 [
 	{
-		"id":"362581e7-4ffc-8036-8560-d53bcd89012f",
-		"filename":"pycharm-集成msys2-虚拟环境.md",
-		"title":"Pycharm 集成MSYS2 虚拟环境",
 		"date":"2026-05-16",
+		"filename":"pycharm-集成msys2-虚拟环境.md",
 		"update":"2026-05-16",
+		"id":"362581e7-4ffc-8036-8560-d53bcd89012f",
 		"collection":"msys2",
+		"title":"Pycharm 集成MSYS2 虚拟环境",
 		"excerpt":"上次介绍了MYSY2[MSYS2 — the Best Bash/Shell for Windows...",
 		"tags":"避坑,msys2"
 	},
@@ -100,12 +100,12 @@
 		"tags":"msys2,shell"
 	},
 	{
-		"id":"360581e7-4ffc-80d2-89d7-db4d17489d50",
-		"filename":"msys2-the-best-bash-shell-for-windows.md",
-		"title":"MSYS2 — the Best Bash/Shell for Windows",
 		"date":"2026-05-14",
+		"filename":"msys2-the-best-bash-shell-for-windows.md",
 		"update":"2026-05-16",
+		"id":"360581e7-4ffc-80d2-89d7-db4d17489d50",
 		"collection":"msys2",
+		"title":"MSYS2 — the Best Bash/Shell for Windows",
 		"excerpt":"用MSYS2 在Windows创建一个完美的终端环境，拒绝cmd、powershell、虚拟机、WS...",
 		"tags":"msys2,shell"
 	},
