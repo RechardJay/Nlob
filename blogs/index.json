@@ -1,5 +1,14 @@
 [
 	{
+		"id":"388581e7-4ffc-808b-9e83-e9be84f77363",
+		"filename":"claude离线安装与配置.md",
+		"title":"Claude离线安装与配置",
+		"date":"2026-06-23",
+		"update":"2026-06-23",
+		"excerpt":"# Claude Code+CC Switch\n\nclaude 已经不再推荐使用node安装。\n\nW...",
+		"tags":"工具,技术,避坑"
+	},
+	{
 		"date":"2026-05-16",
 		"filename":"pycharm-集成msys2-虚拟环境.md",
 		"update":"2026-05-16",
