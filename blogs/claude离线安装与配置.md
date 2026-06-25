@@ -27,3 +27,5 @@ irm https://daheiai.com/cc.ps1 | iex
 **重点：**
 
 这样仅能运行code模式，cowork仍然无法使用
+
+参考文献
