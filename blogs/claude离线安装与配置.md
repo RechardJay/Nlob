@@ -18,7 +18,7 @@ irm [https://claude.ai/install.ps1](https://claude.ai/install.ps1) | iex
 irm https://daheiai.com/cc.ps1 | iex
 ```
 
-# 安装Claude App
+# 安装Claude DeskTop App
 
 从该仓库下载离线镜像
 
@@ -26,6 +26,16 @@ irm https://daheiai.com/cc.ps1 | iex
 
 **重点：**
 
-这样仅能运行code模式，cowork仍然无法使用
-
 参考文献
+
+## Desktop和CLI
+
+Desktop其实集成了三个不同的功能/产品：Chat、Cowork、Code。
+
+3p模式下无法使用Chat，不做讨论。
+
+桌面版的Cowork、Code以及CLI版本的Claude Code其实是三个不同的产品、数据不互通。
+
+只有桌面版Code和Claude Code的Skill/Plugin是共享的，（~/.claude目录），但二者的会话也是独立存储。
+
+真是反直觉的，共享同一引擎确不互通数据。Coworke和Code不互通可以理解，但CLI和Desktop Code共享技能不共享会话实在愚蠢。虽然官方在CLI提供可/desktop 可以把CLI会话导入桌面版，也只是对这个失败设计亡羊补牢，桌面版
