@@ -1,7 +1,7 @@
 ---
 title: "Claude离线安装与配置"
 date: "2026-06-23"
-tags: "工具,技术,避坑"
+tags: "工具,技术,避坑,AI"
 ---
 
 # Claude Code+CC Switch

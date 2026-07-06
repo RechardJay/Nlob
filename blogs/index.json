@@ -1,12 +1,23 @@
 [
 	{
+		"id":"394581e7-4ffc-8091-a632-dbd3fb62560b",
+		"filename":"永别claude.md",
+		"title":"永别Claude",
+		"date":"2026-07-05",
+		"update":"2026-07-05",
+		"collection":"Coding Agent",
+		"excerpt":"刚入坑没多久Claude就暴雷了，之前以为接入国内大模型不会有影响，后来发现连Agent工具也针对国...",
+		"tags":"技术,避坑,AI"
+	},
+	{
 		"id":"388581e7-4ffc-808b-9e83-e9be84f77363",
 		"filename":"claude离线安装与配置.md",
 		"title":"Claude离线安装与配置",
 		"date":"2026-06-23",
-		"update":"2026-06-28",
+		"update":"2026-07-05",
+		"collection":"Coding Agent",
 		"excerpt":"# Claude Code+CC Switch\n\nclaude 已经不再推荐使用node安装。\n\nW...",
-		"tags":"工具,技术,避坑"
+		"tags":"工具,技术,避坑,AI"
 	},
 	{
 		"date":"2026-05-16",
@@ -156,13 +167,13 @@
 		"excerpt":"伟大的管程出现了，这是一种高级同步工具，也是最NB最流行的同步手段。\n\n<details>\n<sum..."
 	},
 	{
-		"date":"2026-01-16",
-		"filename":"什么是并发.md",
-		"update":"2026-01-17",
-		"id":"2ea581e7-4ffc-803f-a2ca-cfd2b82256d7",
+		"id":"2ea581e7-4ffc-808e-b21d-cc971c21cbed",
+		"filename":"管程-monitor.md",
+		"title":"管程 Monitor",
+		"date":"2026-01-17",
+		"update":"2026-07-05",
 		"collection":"深入理解并发",
-		"title":"什么是并发",
-		"excerpt":"# 什么是并发\n\n并发的核心是处理共享资源，这也是为什么提到并发我们首先想到多线程并发，因为线程之间...",
+		"excerpt":"伟大的管程出现了，这是一种高级同步工具，也是最NB最流行的同步手段。\n\n<details>\n<sum...",
 		"tags":"技术"
 	},
 	{
