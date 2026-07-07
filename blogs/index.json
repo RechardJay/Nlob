@@ -1,13 +1,13 @@
 [
 	{
-		"id":"394581e7-4ffc-8091-a632-dbd3fb62560b",
-		"filename":"永别claude.md",
-		"title":"永别Claude",
-		"date":"2026-07-05",
+		"date":"2026-06-23",
+		"filename":"claude离线安装与配置.md",
 		"update":"2026-07-05",
+		"id":"388581e7-4ffc-808b-9e83-e9be84f77363",
 		"collection":"Coding Agent",
-		"excerpt":"刚入坑没多久Claude就暴雷了，之前以为接入国内大模型不会有影响，后来发现连Agent工具也针对国...",
-		"tags":"技术,避坑,AI"
+		"title":"Claude离线安装与配置",
+		"excerpt":"# Claude Code+CC Switch\n\nclaude 已经不再推荐使用node安装。\n\nW...",
+		"tags":"工具,技术,避坑,AI"
 	},
 	{
 		"id":"388581e7-4ffc-808b-9e83-e9be84f77363",
@@ -18,16 +18,6 @@
 		"collection":"Coding Agent",
 		"excerpt":"# Claude Code+CC Switch\n\nclaude 已经不再推荐使用node安装。\n\nW...",
 		"tags":"工具,技术,避坑,AI"
-	},
-	{
-		"date":"2026-05-16",
-		"filename":"pycharm-集成msys2-虚拟环境.md",
-		"update":"2026-05-16",
-		"id":"362581e7-4ffc-8036-8560-d53bcd89012f",
-		"collection":"msys2",
-		"title":"Pycharm 集成MSYS2 虚拟环境",
-		"excerpt":"上次介绍了MYSY2[MSYS2 — the Best Bash/Shell for Windows...",
-		"tags":"避坑,msys2"
 	},
 	{
 		"date":"2026-05-14",
@@ -165,6 +155,16 @@
 		"collection":"深入理解并发",
 		"title":"管程 Monitor",
 		"excerpt":"伟大的管程出现了，这是一种高级同步工具，也是最NB最流行的同步手段。\n\n<details>\n<sum..."
+	},
+	{
+		"date":"2026-01-17",
+		"filename":"管程-monitor.md",
+		"update":"2026-07-05",
+		"id":"2ea581e7-4ffc-808e-b21d-cc971c21cbed",
+		"collection":"深入理解并发",
+		"title":"管程 Monitor",
+		"excerpt":"伟大的管程出现了，这是一种高级同步工具，也是最NB最流行的同步手段。\n\n<details>\n<sum...",
+		"tags":"技术"
 	},
 	{
 		"id":"2ea581e7-4ffc-808e-b21d-cc971c21cbed",
