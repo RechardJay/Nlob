@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class NotionSync {
     private final String apiToken;
@@ -25,7 +26,11 @@ public class NotionSync {
         this.outputDir = outputDir;
     }
 
-    public void sync() {
+    /**
+     * 同步入口
+     * @param fullSync true = 全量同步所有文章, false = 仅同步最近 3 天
+     */
+    public void sync(boolean fullSync) {
         try {
             // 创建输出目录
             Path blogsDir = Paths.get(outputDir, "blogs");
@@ -33,72 +38,111 @@ public class NotionSync {
 
             // 获取Notion数据
             NotionClient client = new NotionClient(apiToken, databaseId);
-            List<BlogPostDO> posts = client.fetchBlogPosts();
-
-            // 生成索引和Markdown文件
-            List<Map<String, Object>> index = loadExistingIndex();
-            Map<String,Integer> idMap = new HashMap<>();
-            for(int i=0;i<index.size();i++) {
-                Map<String, Object> objectMap = index.get(i);
-                idMap.put(objectMap.get("id").toString(),i);
+            List<BlogPostDO> posts;
+            if (fullSync) {
+                posts = client.fetchAllPosts();
+            } else {
+                posts = client.fetchRecentPosts(3);
             }
+
+            // 生成Markdown文件
             for (BlogPostDO post : posts) {
                 if (post.getTitle() != null) {
-                    // 生成Markdown文件
                     String markdown = generateMarkdownFile(post);
                     Path filePath = blogsDir.resolve(post.getFilename());
                     Files.writeString(filePath, markdown);
                     System.out.println("生成文件: " + post.getFilename());
-                    //移除已经存在的文章（更新）
-                    if (idMap.containsKey(post.getId())) {
-                        index.remove(idMap.get(post.getId()).intValue());
-                    }
-                    // 添加到索引
-                    Map<String, Object> indexEntry = new LinkedHashMap<>();
-                    indexEntry.put("id", post.getId());
-                    indexEntry.put("filename", post.getFilename());
-                    indexEntry.put("title", post.getTitle());
-                    indexEntry.put("date", post.getCreatedTime().format(DATE_FORMATTER));
-                    indexEntry.put("update",post.getLastEditedTime().format(DATE_FORMATTER) );
-                    String collection = post.getCollection();
-                    if(collection!=null){
-                        indexEntry.put("collection",collection);
-                    }
-
-                    // 处理摘要
-                    String excerpt = post.getExcerpt();
-                    if (excerpt == null || excerpt.trim().isEmpty()) {
-                        if (post.getContent() != null && post.getContent().length() > 50) {
-                            excerpt = post.getContent().substring(0, 50) + "...";
-                        } else if (post.getContent() != null) {
-                            excerpt = post.getContent();
-                        } else {
-                            excerpt = "暂无摘要";
-                        }
-                    }
-                    indexEntry.put("excerpt", excerpt);
-
-                    if (!post.getTags().isEmpty()) {
-                        indexEntry.put("tags", String.join(",", post.getTags()));
-                    }
-
-                    index.add(indexEntry);
                 }
             }
 
-            // 按日期排序（最新的在前）
-            index.sort((a, b) -> ((String) b.get("date")).compareTo((String) a.get("date")));
+            // 更新索引
+            updateIndex(posts);
 
-            String indexJson = JSON.toJSONString(index, JSONWriter.Feature.PrettyFormat);
-            Files.writeString(Paths.get(outputDir, "blogs", "index.json"), indexJson);
-
-            System.out.println("同步完成！生成 " + index.size() + " 篇文章");
+            System.out.println("同步完成！" + (fullSync ? "全量" : "增量") + "同步 " + posts.size() + " 篇文章");
 
         } catch (Exception e) {
             System.err.println("同步失败: " + e.getMessage());
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    /**
+     * 更新索引文件：用 Notion 全量数据重建索引，消除覆盖和重复问题。
+     * <p>
+     * 修复说明：
+     * - 旧代码用 id→index 的 Map 逐条删除，但 remove 后后续元素下标偏移，导致错删和重复。
+     * - 改用 removeIf + ID 集合批量删除，消除下标偏移 bug。
+     */
+    private void updateIndex(List<BlogPostDO> posts) {
+        try {
+            List<Map<String, Object>> index = loadExistingIndex();
+            Set<String> fetchedIds = posts.stream()
+                    .map(BlogPostDO::getId)
+                    .collect(Collectors.toSet());
+
+            // 批量移除已获取文章（防止下标偏移 bug）
+            int before = index.size();
+            index.removeIf(entry -> fetchedIds.contains(entry.get("id").toString()));
+            int removed = before - index.size();
+            System.out.println("索引移除 " + removed + " 条旧记录");
+
+            // 添加新条目
+            int added = 0;
+            for (BlogPostDO post : posts) {
+                if (post.getTitle() == null) continue;
+                Map<String, Object> entry = buildIndexEntry(post);
+                index.add(entry);
+                added++;
+            }
+            System.out.println("索引新增 " + added + " 条记录");
+
+            // 按日期排序（最新的在前）
+            index.sort((a, b) -> ((String) b.get("date")).compareTo((String) a.get("date")));
+
+            String indexJson = JSON.toJSONString(index, JSONWriter.Feature.PrettyFormat);
+            Files.writeString(Paths.get(outputDir, "blogs", "index.json"), indexJson);
+            System.out.println("索引更新完成，共 " + index.size() + " 条");
+
+        } catch (Exception e) {
+            throw new RuntimeException("更新索引失败", e);
+        }
+    }
+
+    /**
+     * 构建单条索引条目
+     */
+    private Map<String, Object> buildIndexEntry(BlogPostDO post) {
+        Map<String, Object> entry = new LinkedHashMap<>();
+        entry.put("id", post.getId());
+        entry.put("filename", post.getFilename());
+        entry.put("title", post.getTitle());
+        entry.put("date", post.getCreatedTime().format(DATE_FORMATTER));
+        entry.put("update", post.getLastEditedTime().format(DATE_FORMATTER));
+
+        String collection = post.getCollection();
+        if (collection != null) {
+            entry.put("collection", collection);
+        }
+
+        // 处理摘要
+        String excerpt = post.getExcerpt();
+        if (excerpt == null || excerpt.trim().isEmpty()) {
+            if (post.getContent() != null && post.getContent().length() > 50) {
+                excerpt = post.getContent().substring(0, 50) + "...";
+            } else if (post.getContent() != null) {
+                excerpt = post.getContent();
+            } else {
+                excerpt = "暂无摘要";
+            }
+        }
+        entry.put("excerpt", excerpt);
+
+        if (!post.getTags().isEmpty()) {
+            entry.put("tags", String.join(",", post.getTags()));
+        }
+
+        return entry;
     }
 
     /**
@@ -152,7 +196,8 @@ public class NotionSync {
 
     public static void main(String[] args) {
         if (args.length < 3) {
-            System.out.println("用法: java com.blog.NotionSync <NOTION_TOKEN> <DATABASE_ID> <OUTPUT_DIR>");
+            System.out.println("用法: java com.blog.NotionSync <NOTION_TOKEN> <DATABASE_ID> <OUTPUT_DIR> [--full]");
+            System.out.println("  --full    全量同步（默认仅同步最近3天）");
             System.out.println("环境变量: NOTION_TOKEN, NOTION_DATABASE_ID");
             System.exit(1);
         }
@@ -179,6 +224,6 @@ public class NotionSync {
         }
 
         NotionSync sync = new NotionSync(apiToken, databaseId, outputDir);
-        sync.sync();
+        sync.sync(false);
     }
 }

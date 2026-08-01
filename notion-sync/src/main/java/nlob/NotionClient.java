@@ -8,9 +8,6 @@ import nlob.utils.TimeUtil;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.URI;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -34,59 +31,97 @@ public class NotionClient {
     }
 
     /**
-     * 查询Notion数据库获取所有博客文章
+     * 查询Notion数据库获取所有博客文章（全量，支持分页）
      */
-    public List<BlogPostDO> fetchBlogPosts() throws Exception {
-        System.out.println("开始从Notion获取博客文章...");
+    public List<BlogPostDO> fetchAllPosts() throws Exception {
+        System.out.println("开始从Notion获取所有博客文章（全量同步）...");
         System.out.println("Database ID: " + databaseId);
+        return fetchPostsWithFilter(null);
+    }
 
-        //构建查询条件
-        String timeString = TimeUtil.getUTCBeforeDays(10);
-        String filterCondition = String.format("""
-                {
-                    "filter": {
-                        "timestamp": "last_edited_time",
-                        "last_edited_time": {
-                            "on_or_after": "%s"
-                        }
+    /**
+     * 查询Notion数据库获取最近 N 天编辑的博客文章（增量，支持分页）
+     */
+    public List<BlogPostDO> fetchRecentPosts(int daysBack) throws Exception {
+        String since = TimeUtil.getUTCBeforeDays(daysBack);
+        System.out.println("开始从Notion获取最近 " + daysBack + " 天的博客文章（增量同步）...");
+        System.out.println("Database ID: " + databaseId + "，起始时间: " + since);
+
+        String filterBody = String.format(
+                "{\"filter\":{\"timestamp\":\"last_edited_time\",\"last_edited_time\":{\"on_or_after\":\"%s\"}}}",
+                since
+        );
+        return fetchPostsWithFilter(filterBody);
+    }
+
+    /**
+     * 通用的分页查询方法
+     * @param filterBody 可选的过滤器 JSON，为 null 时表示无过滤（全量）
+     */
+    private List<BlogPostDO> fetchPostsWithFilter(String filterBody) throws Exception {
+        List<BlogPostDO> allPosts = new ArrayList<>();
+        String startCursor = null;
+        boolean hasMore = true;
+        int pageNum = 0;
+
+        while (hasMore) {
+            pageNum++;
+            String requestBody = buildQueryBody(startCursor, filterBody);
+            Request request = new Request.Builder()
+                    .url(NOTION_API_BASE + "/databases/" + databaseId + "/query")
+                    .header("Authorization", "Bearer " + apiToken)
+                    .header("Notion-Version", "2022-06-28")
+                    .header("Content-Type", "application/json")
+                    .post(RequestBody.create(requestBody, MediaType.parse("application/json; charset=utf-8")))
+                    .build();
+
+            try (Response response = httpClient.newCall(request).execute()) {
+                if (response.code() != 200) {
+                    System.err.println("API响应内容: " + response.body());
+                    throw new RuntimeException("Notion API请求失败: " + response.code() + " - " + response.body());
+                }
+                String responseBody = response.body().string();
+                JSONObject root = JSON.parseObject(responseBody);
+                JSONArray results = root.getJSONArray("results");
+
+                System.out.println("分页 " + pageNum + " 获取到 " + results.size() + " 条记录");
+
+                for (int i = 0; i < results.size(); i++) {
+                    JSONObject page = results.getJSONObject(i);
+                    BlogPostDO post = parsePage(page);
+                    if (post != null) {
+                        allPosts.add(post);
                     }
                 }
-                """, timeString);
-        Request request = new Request.Builder()
-                .url(NOTION_API_BASE + "/databases/" + databaseId + "/query")
-                .header("Authorization", "Bearer " + apiToken)
-                .header("Notion-Version", "2022-06-28")
-                .header("Content-Type", "application/json")
-                .post(RequestBody.create(filterCondition, MediaType.parse("application/json; charset=utf-8")))
-                .build();
 
-        try (Response response = httpClient.newCall(request).execute();) {
-            System.out.println("API响应状态: " + response.code());
-            if (response.code() != 200) {
-                System.err.println("API响应内容: " + response.body());
-                throw new RuntimeException("Notion API请求失败: " + response.code() + " - " + response.body());
+                startCursor = root.getString("next_cursor");
+                hasMore = root.getBooleanValue("has_more");
             }
-            if (!response.isSuccessful()) {
-                System.out.println("请求失败，响应头: " + response.headers());
-            }
-            String responseBody = response.body().string();
-            JSONObject root = JSON.parseObject(responseBody);
-            JSONArray results = root.getJSONArray("results");
-
-            List<BlogPostDO> posts = new ArrayList<>();
-            for (int i = 0; i < results.size(); i++) {
-                JSONObject page = results.getJSONObject(i);
-                BlogPostDO post = parsePage(page);
-                if (post != null) {
-                    posts.add(post);
-                }
-            }
-
-            System.out.printf("成功获取,从 %s 到现在，共有%d篇文章", timeString, posts.size());
-            return posts;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
+
+        System.out.println("成功获取文章，共 " + allPosts.size() + " 篇（分页 " + pageNum + " 次）");
+        return allPosts;
+    }
+
+    /**
+     * 构建查询请求体（支持过滤器和分页游标）
+     */
+    private String buildQueryBody(String startCursor, String filterBody) {
+        StringBuilder body = new StringBuilder("{");
+        if (filterBody != null) {
+            // 移除外层花括号后嵌入
+            String inner = filterBody.trim();
+            if (inner.startsWith("{") && inner.endsWith("}")) {
+                inner = inner.substring(1, inner.length() - 1).trim();
+            }
+            body.append(inner).append(",");
+        }
+        body.append("\"page_size\": 100");
+        if (startCursor != null && !startCursor.isEmpty()) {
+            body.append(",\"start_cursor\": \"").append(startCursor).append("\"");
+        }
+        body.append("}");
+        return body.toString();
     }
 
     /**
