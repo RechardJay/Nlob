@@ -4,7 +4,7 @@ date: "2026-05-16"
 tags: "避坑,msys2"
 ---
 
-上次介绍了MYSY2[MSYS2 — the Best Bash/Shell for Windows](https://www.notion.so/360581e74ffc80d289d7db4d17489d50) ，今天在Pycharm中使用集成终端时就遇到了问题。
+上次介绍了MYSY2[MSYS2 — the Best Bash/Shell for Windows](https://app.notion.com/p/360581e74ffc80d289d7db4d17489d50) ，今天在Pycharm中使用集成终端时就遇到了问题。
 
 # 问题复现
 
