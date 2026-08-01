@@ -1,61 +1,77 @@
-name: Sync Notion to Blog
+name: Sync Notion & Deploy Pages
 
 on:
   schedule:
-    # 每天UTC时间0:00执行
     - cron: '0 0 * * *'
-  workflow_dispatch:        # 允许手动触发
+  workflow_dispatch:
   push:
     branches: [ main ]
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  sync-notion:
+  sync-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # 添加写入权限
-    
     steps:
-    # 1. 拉取代码
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
-    # 2. 设置Java环境
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: 'maven'
-        
-    # 3. 进入notion-sync目录构建项目
-    - name: Build with Maven
-      run: |
-        cd notion-sync
-        mvn clean package -DskipTests
-        
-    # 4. 运行Notion同步程序
-    - name: Run Notion Sync
-      run: |
-        cd notion-sync
-        java -jar target/Notion-Sync-1.0-SNAPSHOT.jar \
-          "${{ secrets.NOTION_TOKEN }}" \
-          "${{ secrets.NOTION_DATABASE_ID }}" \
-          "../"
-      env:
-        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-        NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
-        
-    # 5. 提交更改
-    - name: Commit and push if changes
-      run: |
-        git config --local user.name "GitHub Actions Bot"
-        git config --local user.email "actions@users.noreply.github.com"
-        git add blogs/
-        if git diff --staged --quiet; then
-          echo "没有变化需要提交"
-        else
-          git commit -m "Auto-sync: Update blog posts from Notion"
-          git push
-        fi
+      # 1. 拉取代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Java环境 & 同步Notion
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: |
+          cd notion-sync
+          mvn clean package -DskipTests
+
+      - name: Run Notion Sync
+        run: |
+          cd notion-sync
+          java -jar target/Notion-Sync-1.0-SNAPSHOT.jar \
+            "${{ secrets.NOTION_TOKEN }}" \
+            "${{ secrets.NOTION_DATABASE_ID }}" \
+            "../"
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+
+      # 3. 提交变更（可选：如果你希望保留仓库内md文件自动更新）
+      - name: Commit and push if changes
+        run: |
+          git config --local user.name "GitHub Actions Bot"
+          git config --local user.email "actions@users.noreply.github.com"
+          git add blogs/
+          if git diff --staged --quiet; then
+            echo "No changes from Notion sync"
+          else
+            git commit -m "Auto-sync: Update blog posts from Notion"
+            git push
+          fi
+
+      # 4. Pages 部署（和你官方部署流程一致，直接在当前工作流发布）
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
