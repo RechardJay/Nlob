@@ -3,46 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>合集 - Jay's Blog</title>
-    <link rel="icon" href="resource\lemt.jpg" type="jpg" />
+    <meta name="description" content="文章合集 — 按主题和系列组织的技术写作" />
+    <title>Collections · Jay's Blog</title>
+    <link rel="icon" href="resource/lemt.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <header class="header">
+    <!-- 页面加载动画 -->
+    <div id="page-loader" class="page-loader">
+      <span class="loader-mark">NLOB</span>
+    </div>
+
+    <!-- 阅读进度条 -->
+    <div id="reading-progress" class="reading-progress"></div>
+
+    <!-- 回到顶部 -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">↑</button>
+
+    <header id="site-header" class="header">
       <div class="container">
-        <h1 class="logo">Jay的技术博客</h1>
+        <h1 class="logo">
+          <a href="index.html">Jay的技术博客</a>
+        </h1>
         <nav class="nav">
-          <a href="index.html">首页</a>
-          <a href="collection.html">合集</a>
-          <a href="resource.html">资源</a>
-          <a href="index.html#about-popup">关于</a>
+          <a href="index.html" data-page="home">首页 / Home</a>
+          <a href="collection.html" class="active" data-page="collection">合集 / Series</a>
+          <a href="resource.html" data-page="resource">资源 / Links</a>
+          <a href="index.html#about-popup">关于 / About</a>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀</button>
         </nav>
       </div>
     </header>
 
-    <main class="container">
-      <button class="tag-btn active" data-tag="all">全部</button>
+    <main>
       <section class="collection-section">
-        <div class="tag-filter">
-          <div class="tag-btn" data-tag="all">标签
-          <div id="tag-buttons-container">
-            <!-- 标签按钮将通过JS动态加载 -->
+        <div class="container">
+          <!-- Collection Hero -->
+          <div class="collection-hero reveal">
+            <h1>文章 <span class="italic">合集</span></h1>
           </div>
-        </div>
-      </div>
-        <div id="collection-container">
-          <!-- 合集内容将通过JS动态加载 -->
-          <div class="loading">加载中...</div>
+
+          <!-- 标签筛选 -->
+          <div class="tag-filter reveal" id="tag-filter-wrap">
+            <button class="tag-btn active" data-tag="all">全部 / All</button>
+            <div id="tag-buttons-container">
+              <!-- 动态加载标签按钮 -->
+            </div>
+          </div>
+
+          <!-- 合集内容 -->
+          <div id="collection-container">
+            <div class="loading">Curating the collections</div>
+          </div>
         </div>
       </section>
     </main>
 
+    <!-- 页脚 -->
     <footer class="footer">
       <div class="container">
-        <p>&copy;Nlob 基于 GitHub Pages+Notion</p>
+        <p class="footer-text">
+          © <span class="accent">Jay's Blog</span> · Powered by Nlob
+        </p>
+        <div class="footer-links">
+          <a href="https://github.com/RechardJay/Nlob" target="_blank" rel="noopener">GitHub</a>
+          <a href="blogs/index.json">Index</a>
+        </div>
       </div>
     </footer>
 
     <script src="js/collection.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>

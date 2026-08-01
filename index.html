@@ -3,106 +3,126 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Jay 的技术博客 — 关于编程、系统设计与学习笔记的深度思考" />
     <title>Jay's Blog</title>
-    <link rel="icon" href="resource\lemt.jpg" type="jpg" />
+    <link rel="icon" href="resource/lemt.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="css/style.css" />
     <!-- Markdown 解析 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- 代码高亮 -->
-
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github-dark.min.css"
-    />
-    <style>
-      .popup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-      }
-
-      .popup-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 30px;
-        border-radius: 5px;
-        max-width: 500px;
-        width: 90%;
-        color: #333; /* 确保文字颜色可见 */
-      }
-
-      /* 当URL哈希匹配时显示弹窗 */
-      .popup:target {
-        display: block;
-      }
-
-      .close-btn {
-        display: inline-block;
-        margin-top: 15px;
-        padding: 8px 15px;
-        background: #007bff;
-        color: white;
-        text-decoration: none;
-        border-radius: 3px;
-      }
-    </style>
+        id="highlight-theme"
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github.min.css"
+      />
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/lib/common.min.js"></script>
   </head>
   <body>
-    <header class="header">
+    <!-- 页面加载动画 -->
+    <div id="page-loader" class="page-loader">
+      <span class="loader-mark">NLOB</span>
+    </div>
+
+    <!-- 阅读进度条 -->
+    <div id="reading-progress" class="reading-progress"></div>
+
+    <!-- 回到顶部 -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">↑</button>
+
+    <!-- 头部导航 -->
+    <header id="site-header" class="header">
       <div class="container">
-        <h1 class="logo">Jay的技术博客</h1>
+        <h1 class="logo">
+          <a href="index.html">Jay的技术博客</a>
+        </h1>
         <nav class="nav">
-          <a href="index.html">首页</a>
-          <a href="collection.html">合集</a>
-          <a href="resource.html">资源</a>
-          <a href="#about-popup">关于</a>
+          <a href="index.html" class="active" data-page="home">首页 / Home</a>
+          <a href="collection.html" data-page="collection">合集 / Series</a>
+          <a href="resource.html" data-page="resource">资源 / Links</a>
+          <a href="#about-popup">关于 / About</a>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀</button>
         </nav>
       </div>
     </header>
+
+    <!-- 关于弹窗 -->
     <div id="about-popup" class="popup">
       <div class="popup-content">
-        <h3>关于</h3>
+        <h3>About</h3>
         <ul>
           <li>
-            <a href="https://github.com/RechardJay">Jay's github</a>
+            <a href="https://github.com/RechardJay" target="_blank" rel="noopener">Jay's GitHub</a>
           </li>
           <li>
-            <a href="https://www.cnblogs.com/jay2home">博客园</a>
+            <a href="https://www.cnblogs.com/jay2home" target="_blank" rel="noopener">博客园 / Cnblogs</a>
           </li>
           <li>
-            <a href="https://juejin.cn/user/781101661173600">掘金</a>
+            <a href="https://juejin.cn/user/781101661173600" target="_blank" rel="noopener">掘金 / Juejin</a>
           </li>
         </ul>
-        <a href="#" class="close-btn">关闭</a>
+        <a href="#" class="close-btn">← Close</a>
       </div>
     </div>
-    <main class="container">
+
+    <main>
+      <!-- Hero 区域 -->
       <section class="hero">
-        <h1>欢迎来到 Jay's Blog</h1>
-        <h2>分享技术思考和学习笔记</h2>
-        <p>这里或许有些有用的东西</p>
+        <div class="container">
+          <div class="hero-eyebrow reveal" style="transition-delay: 0.1s">
+            Issue · Est. 2024 · Ongoing
+          </div>
+          <h1 class="hero-title reveal" style="transition-delay: 0.2s">
+            记录 <span class="italic">技术</span> 的<br />
+            <span class="underline-text">思考脉络</span>
+          </h1>
+          <p class="hero-subtitle reveal" style="transition-delay: 0.35s">分享技术思考和学习笔记</p>
+          <p class="hero-subtitle reveal" style="transition-delay: 0.35s">这里或许有些有用的东西</p>
+          <div class="hero-meta reveal" style="transition-delay: 0.5s">
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Articles</span>
+              <span class="hero-meta-value" id="count-articles">—<span class="unit">篇</span></span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Collections</span>
+              <span class="hero-meta-value" id="count-collections">—<span class="unit">组</span></span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Tags</span>
+              <span class="hero-meta-value" id="count-tags">—<span class="unit">个</span></span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Last Update</span>
+              <span class="hero-meta-value" id="last-update" style="font-size: 1.3rem">—</span>
+            </div>
+          </div>
+        </div>
       </section>
 
+      <!-- 博客列表区 -->
       <section class="blog-list">
-        <h3>最新文章</h3>
-        <div id="blog-list-container">
-          <!-- 博客列表将通过JS动态加载 -->
-          <div class="loading">加载中...</div>
+        <div class="container">
+          <div class="section-header reveal">
+            <h2 class="section-title">最新文章</h2>
+            <span class="section-title-en">Recent Writings</span>
+          </div>
+
+          <div id="blog-list-container">
+            <div class="loading">Assembling the journal</div>
+          </div>
         </div>
       </section>
     </main>
 
+    <!-- 页脚 -->
     <footer class="footer">
       <div class="container">
-        <p>&copy;Nlob 基于 GitHub Pages+Notion</p>
+        <p class="footer-text">
+          © <span class="accent">Jay's Blog</span> · Powered by Nlob
+        </p>
+        <div class="footer-links">
+          <a href="https://github.com/RechardJay/Nlob" target="_blank" rel="noopener">GitHub</a>
+          <a href="blogs/index.json">Index</a>
+        </div>
       </div>
     </footer>
 

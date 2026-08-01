@@ -3,80 +3,119 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>资源 - Jay's Blog</title>
-    <link rel="icon" href="resource\lemt.jpg" type="jpg" />
+    <meta name="description" content="精选资源与链接 — 工具、文档、学习路径推荐" />
+    <title>Resources · Jay's Blog</title>
+    <link rel="icon" href="resource/lemt.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <header class="header">
+    <!-- 页面加载动画 -->
+    <div id="page-loader" class="page-loader">
+      <span class="loader-mark">NLOB</span>
+    </div>
+
+    <!-- 阅读进度条 -->
+    <div id="reading-progress" class="reading-progress"></div>
+
+    <!-- 回到顶部 -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">↑</button>
+
+    <header id="site-header" class="header">
       <div class="container">
-        <h1 class="logo">Jay的技术博客</h1>
+        <h1 class="logo">
+          <a href="index.html">Jay的技术博客</a>
+        </h1>
         <nav class="nav">
-          <a href="index.html">首页</a>
-          <a href="collection.html">合集</a>
-          <a href="resource.html">资源</a>
-          <a href="index.html#about-popup">关于</a>
+          <a href="index.html" data-page="home">首页 / Home</a>
+          <a href="collection.html" data-page="collection">合集 / Series</a>
+          <a href="resource.html" class="active" data-page="resource">资源 / Links</a>
+          <a href="index.html#about-popup">关于 / About</a>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀</button>
         </nav>
       </div>
     </header>
 
-    <main class="container">
-      <div class="hero">
-        <h2>资源链接</h2>
-        <p>探索有用的工具、文档和相关链接</p>
-      </div>
+    <main>
+      <section class="collection-section">
+        <div class="container">
+          <!-- Resource Hero -->
+          <div class="collection-hero reveal">
+            <h1>精选 <span class="italic">资源</span></h1>
+            <p>有趣、有用</p>
+          </div>
 
-      <div id="resource-grid" class="resource-grid">
-        <!-- 资源将通过JS动态加载 -->
-        <div class="loading">加载中...</div>
-      </div>
+          <div id="resource-grid" class="resource-grid">
+            <div class="loading">Compiling the references</div>
+          </div>
+        </div>
+      </section>
     </main>
 
+    <!-- 页脚 -->
     <footer class="footer">
       <div class="container">
-        <p>&copy;Nlob 基于 GitHub Pages+Notion</p>
+        <p class="footer-text">
+          © <span class="accent">Jay's Blog</span> · Powered by Nlob
+        </p>
+        <div class="footer-links">
+          <a href="https://github.com/RechardJay/Nlob" target="_blank" rel="noopener">GitHub</a>
+          <a href="blogs/index.json">Index</a>
+        </div>
       </div>
     </footer>
 
     <script src="res/linkResources.js"></script>
+    <script src="js/app.js"></script>
     <script>
       // 动态生成资源卡片
-      if (typeof linkResourcesData !== 'undefined') {
-        const grid = document.getElementById('resource-grid');
-        grid.innerHTML = '';
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof linkResourcesData !== 'undefined') {
+          const grid = document.getElementById('resource-grid');
+          grid.innerHTML = '';
 
-        linkResourcesData.forEach(category => {
-          const card = document.createElement('section');
-          card.className = 'resource-card';
+          linkResourcesData.forEach((category, idx) => {
+            const card = document.createElement('section');
+            card.className = 'resource-card reveal is-visible';
+            card.style.transitionDelay = (idx * 0.08) + 's';
 
-          const title = document.createElement('h3');
-          title.textContent = category.title;
-          card.appendChild(title);
+            const title = document.createElement('h3');
+            title.textContent = category.title;
+            card.appendChild(title);
 
-          const ul = document.createElement('ul');
-          ul.className = 'resource-list';
+            const ul = document.createElement('ul');
+            ul.className = 'resource-list';
 
-          category.list.forEach(item => {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = item.link;
-            
-            // 判断是否为外链
-            if (item.link.startsWith('http')) {
-              a.target = '_blank';
-            }
-            
-            // 显示description或link作为文本
-            a.textContent = item.description || item.link;
-            
-            li.appendChild(a);
-            ul.appendChild(li);
+            category.list.forEach(item => {
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              a.href = item.link;
+
+              // 判断是否为外链
+              if (item.link.startsWith('http')) {
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+              }
+
+              // 显示文本
+              const textSpan = document.createElement('span');
+              textSpan.textContent = item.description || item.link;
+              a.appendChild(textSpan);
+
+              // 箭头
+              const arrow = document.createElement('span');
+              arrow.className = 'link-arrow';
+              arrow.textContent = '↗';
+              a.appendChild(arrow);
+
+              li.appendChild(a);
+              ul.appendChild(li);
+            });
+
+            card.appendChild(ul);
+            grid.appendChild(card);
           });
-
-          card.appendChild(ul);
-          grid.appendChild(card);
-        });
-      }
+        }
+      });
     </script>
   </body>
 </html>

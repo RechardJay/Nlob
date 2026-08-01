@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Article · Jay's Blog</title>
-    <link rel="icon" href="resource/note.jpg" type="image/jpeg" />
+    <meta name="description" content="合集阅读 — 连续阅读系列文章" />
+    <title>Series · Jay's Blog</title>
+    <link rel="icon" href="resource/lemt.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="css/style.css" />
     <!-- Markdown 解析 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -34,7 +35,7 @@
         </h1>
         <nav class="nav">
           <a href="index.html" data-page="home">首页 / Home</a>
-          <a href="collection.html" data-page="collection">合集 / Series</a>
+          <a href="collection.html" class="active" data-page="collection">合集 / Series</a>
           <a href="resource.html" data-page="resource">资源 / Links</a>
           <a href="index.html#about-popup">关于 / About</a>
           <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀</button>
@@ -43,26 +44,38 @@
     </header>
 
     <main>
-      <section class="blog-article-wrap">
+      <section class="collection-read-section">
         <div class="container">
-          <div class="blog-layout">
-            <article class="blog-post">
-              <div id="blog-content-container">
-                <div class="loading">Fetching the manuscript</div>
+          <div class="collection-read-layout">
+            <!-- 左侧：合集文章目录 -->
+            <aside class="cr-sidebar" id="cr-sidebar">
+              <div class="cr-sidebar-header">
+                <span id="cr-collection-name">合集</span>
+                <a href="collection.html" class="cr-back-link">← 返回</a>
               </div>
-            </article>
+              <ul id="cr-article-list" class="cr-article-list">
+                <li class="loading">Loading...</li>
+              </ul>
+            </aside>
 
-            <nav id="toc-sidebar" class="toc-sidebar">
+            <!-- 中间：文章正文 -->
+            <main class="cr-content">
+              <div id="cr-content-container">
+                <div class="loading">Select an article to read</div>
+              </div>
+              <div class="cr-nav">
+                <a href="collection.html" class="btn">
+                  <span class="arrow">←</span>
+                  <span>返回合集 / Back to Series</span>
+                </a>
+              </div>
+            </main>
+
+            <!-- 右侧：标题大纲 -->
+            <nav class="toc-sidebar" id="cr-toc">
               <div class="toc-header">目录</div>
-              <ul id="toc-list" class="toc-list"></ul>
+              <ul id="cr-toc-list" class="toc-list"></ul>
             </nav>
-          </div>
-
-          <div class="blog-nav">
-            <a href="index.html" class="btn">
-              <span class="arrow">←</span>
-              <span>返回首页 / Back to Index</span>
-            </a>
           </div>
         </div>
       </section>
@@ -83,6 +96,7 @@
     </footer>
 
     <script src="js/markdown-loader.js"></script>
+    <script src="js/collection-read.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
