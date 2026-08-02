@@ -1,5 +1,23 @@
 [
 	{
+		"id":"3af581e7-4ffc-80ac-83a3-e49d0a17f163",
+		"filename":"clash-verge-全局规则.md",
+		"title":"Clash Verge 全局规则",
+		"date":"2026-08-01",
+		"update":"2026-08-01",
+		"excerpt":"Verge 中有两个地方可以修改全局规则\n\n前置用yml是覆盖订阅中同名配置。\n\n后者用js脚本动态...",
+		"tags":"工具,避坑"
+	},
+	{
+		"id":"3af581e7-4ffc-80c5-a2e6-c935e28e6e9d",
+		"filename":"gitaction-gitpages.md",
+		"title":"GitAction + GitPages",
+		"date":"2026-08-01",
+		"update":"2026-08-01",
+		"excerpt":"GitAction 和GitPages 用github部署静态站点的一套流程。其中GitPage负责...",
+		"tags":"博客,避坑"
+	},
+	{
 		"date":"2026-07-05",
 		"filename":"永别claude.md",
 		"update":"2026-07-05",
