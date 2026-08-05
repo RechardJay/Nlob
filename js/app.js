@@ -59,6 +59,7 @@
     initStats();
     initThemeToggle();
     initHeroCollapse();
+    initAboutPopup();
   });
 
   // ============== 1. 滚动显示动画（Intersection Observer） ==============
@@ -303,6 +304,43 @@
     // 鼠标离开 hero 区域 → 收起
     hero.addEventListener('mouseleave', function () {
       hero.classList.add('collapsed');
+    });
+  }
+
+  // ============== 10. 关于弹窗 ==============
+  function initAboutPopup() {
+    const popup = document.getElementById('about-popup');
+    if (!popup) return;
+
+    // 所有 #about-popup 链接 → 阻止跳转，改为切换弹窗
+    document.querySelectorAll('a[href="#about-popup"]').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        popup.classList.toggle('is-open');
+      });
+    });
+
+    // 关闭按钮
+    const closeBtn = popup.querySelector('.close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        popup.classList.remove('is-open');
+      });
+    }
+
+    // 点击遮罩关闭
+    popup.addEventListener('click', function (e) {
+      if (e.target === popup) {
+        popup.classList.remove('is-open');
+      }
+    });
+
+    // ESC 关闭
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && popup.classList.contains('is-open')) {
+        popup.classList.remove('is-open');
+      }
     });
   }
 })();
