@@ -87,19 +87,37 @@ const linkResourcesData = [
                 link: "https://imgapi.xl0408.top/index.php",
             },
             {
-                link:"https://uapis.cn/api/v1/random/image",
-                description:"?category=acg&type=pc"
+                link: "https://uapis.cn/api/v1/random/image",
+                description: "?category=acg&type=pc"
             },
             {
-                link:"https://app.zichen.zone/api/acg/api.php"
+                link: "https://app.zichen.zone/api/acg/api.php"
             },
             {
-                link:"https://www.dmoe.cc/random.php"
+                link: "https://www.dmoe.cc/random.php"
             },
             {
-                link:"https://t.alcy.cc/pc"
+                link: "https://t.alcy.cc/pc"
             }
         ]
 
+    },
+    {
+        title: "lx 音源",//github.com/pdone/lx-music-source",
+        list: [
+            {
+                link: "https://github.com/pdone/lx-music-source",
+                description: "知名聚合"
+                
+            },
+            {
+                link:"https://github.com/Macrohard0001/lx-ikun-music-sources",
+                description:"自维护"
+            },
+            {
+                link:"https://github.com/liuyunss/LX-source",
+                description:"自维护"
+            }
+        ]
     }
 ]
