@@ -1,19 +1,19 @@
 [
 	{
-		"id":"3b4581e7-4ffc-80a7-bf8d-c5520d210249",
-		"filename":"apt源修复-ubuntu24.md",
-		"title":"apt源修复-Ubuntu24",
 		"date":"2026-08-06",
+		"filename":"apt源修复-ubuntu24.md",
 		"update":"2026-08-06",
+		"id":"3b4581e7-4ffc-80a7-bf8d-c5520d210249",
+		"title":"apt源修复-Ubuntu24",
 		"excerpt":"# 一、起因\n\n## 背景故事\n\n通过dpkg安装的deb包会注册到dpkg索引中。apt基于dpk...",
 		"tags":"Linux"
 	},
 	{
-		"id":"3b1581e7-4ffc-803c-b92e-ff01d7c201fb",
-		"filename":"onedrive-客户端-for-linux.md",
-		"title":"OneDrive 客户端 for Linux",
 		"date":"2026-08-03",
+		"filename":"onedrive-客户端-for-linux.md",
 		"update":"2026-08-06",
+		"id":"3b1581e7-4ffc-803c-b92e-ff01d7c201fb",
+		"title":"OneDrive 客户端 for Linux",
 		"excerpt":"# 起因\n\n我常用的网盘如onedrive、夸克 在Linux上并没有客户端，而且由于我的onedr...",
 		"tags":"Linux,避坑,工具"
 	},
