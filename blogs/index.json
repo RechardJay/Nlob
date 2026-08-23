@@ -1,18 +1,57 @@
 [
 	{
-		"date":"2026-08-16",
-		"filename":"cpp结构体漫游.md",
-		"update":"2026-08-16",
-		"id":"3fb9dcb2-1f3c-4f24-aec8-c2a469823bba",
-		"title":"cpp结构体漫游",
-		"excerpt":"前情提要：C和C++是不同的语言，早已不是超集的简单关系，并且渐行渐远。\n\n从结构体管中窥豹。\n\n#..."
+		"id":"3c4581e7-4ffc-80d3-95e4-d6d3fcc4441c",
+		"filename":"pi-extension-和package.md",
+		"title":"PI-Extension 和Package",
+		"date":"2026-08-22",
+		"update":"2026-08-23",
+		"excerpt":"package 本质是一个普通 npm 包，增加了`pi`元数据字段。专门用来打包分发PI的skil..."
 	},
 	{
-		"date":"2026-08-06",
-		"filename":"apt源修复-ubuntu24.md",
-		"update":"2026-08-06",
+		"id":"3c4581e7-4ffc-809a-9aaa-dd8739f3aa7e",
+		"filename":"pi-skills.md",
+		"title":"PI-Skills",
+		"date":"2026-08-22",
+		"update":"2026-08-23",
+		"collection":"PI-Agent",
+		"excerpt":"skills，说白了就是一堆提示词。高级一点就是经过别人（或者你自己）验证过的，好用的能明确在某些场...",
+		"tags":"工具,AI"
+	},
+	{
+		"id":"3c4581e7-4ffc-804a-99e9-fa1f338571a4",
+		"filename":"pi-入门.md",
+		"title":"PI 入门",
+		"date":"2026-08-22",
+		"update":"2026-08-22",
+		"collection":"PI-Agent",
+		"excerpt":"[https://pi.dev/](https://pi.dev/)\n\nPI 是一个极简的agent...",
+		"tags":"工具,AI"
+	},
+	{
+		"id":"3c4581e7-4ffc-8056-a924-c79efcf8dadf",
+		"filename":"pi-agent-mcp-连接-godot-ai.md",
+		"title":"pi-agent MCP 连接 GODOT-AI",
+		"date":"2026-08-22",
+		"update":"2026-08-22",
+		"collection":"PI-Agent",
+		"excerpt":"# **在GODOT中安装godot-ai插件**\n\n**GODOT-AI 基于UV，确保 uv 已...",
+		"tags":"工具,AI"
+	},
+	{
+		"id":"3fb9dcb2-1f3c-4f24-aec8-c2a469823bba",
+		"filename":"cpp结构体漫游.md",
+		"title":"cpp结构体漫游",
+		"date":"2026-08-16",
+		"update":"2026-08-22",
+		"excerpt":"前情提要：C和C++是不同的语言，早已不是超集的简单关系，并且渐行渐远。\n\n从结构体管中窥豹。\n\n#...",
+		"tags":"技术"
+	},
+	{
 		"id":"3b4581e7-4ffc-80a7-bf8d-c5520d210249",
+		"filename":"apt源修复-ubuntu24.md",
 		"title":"apt源修复-Ubuntu24",
+		"date":"2026-08-06",
+		"update":"2026-08-22",
 		"excerpt":"# 一、起因\n\n## 背景故事\n\n通过dpkg安装的deb包会注册到dpkg索引中。apt基于dpk...",
 		"tags":"Linux"
 	},
