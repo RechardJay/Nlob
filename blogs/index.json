@@ -1,11 +1,11 @@
 [
 	{
 		"id":"3c4581e7-4ffc-80d3-95e4-d6d3fcc4441c",
-		"filename":"pi-extension-和package.md",
-		"title":"PI-Extension 和Package",
+		"filename":"pi-package和extension.md",
+		"title":"PI-Package和Extension",
 		"date":"2026-08-22",
 		"update":"2026-08-23",
-		"excerpt":"package 本质是一个普通 npm 包，增加了`pi`元数据字段。专门用来打包分发PI的skil..."
+		"excerpt":"package 本质是一个普通 npm 包。专门用来打包分发PI的skills、prompts、th..."
 	},
 	{
 		"id":"3c4581e7-4ffc-809a-9aaa-dd8739f3aa7e",
