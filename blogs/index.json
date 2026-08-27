@@ -30,11 +30,11 @@
 		"tags":"工具,AI"
 	},
 	{
-		"id":"3c4581e7-4ffc-80d3-95e4-d6d3fcc4441c",
-		"filename":"pi-package和extension.md",
-		"title":"PI-Package和Extension",
 		"date":"2026-08-22",
+		"filename":"pi-package和extension.md",
 		"update":"2026-08-23",
+		"id":"3c4581e7-4ffc-80d3-95e4-d6d3fcc4441c",
+		"title":"PI-Package和Extension",
 		"excerpt":"package 本质是一个普通 npm 包。专门用来打包分发PI的skills、prompts、th..."
 	},
 	{
