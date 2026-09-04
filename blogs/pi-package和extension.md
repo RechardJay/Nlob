@@ -1,6 +1,7 @@
 ---
 title: "PI-Package和Extension"
 date: "2026-08-22"
+tags: "AI,工具"
 ---
 
 package 本质是一个普通 npm 包。专门用来打包分发PI的skills、prompts、themes、extension等资源。
