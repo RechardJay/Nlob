@@ -1,11 +1,11 @@
 [
 	{
-		"id":"3d0581e7-4ffc-80dc-9865-fcc371184161",
-		"filename":"io缓冲区漫游-hello-world-advanced.md",
-		"title":"IO缓冲区漫游—Hello World Advanced",
 		"date":"2026-09-03",
+		"filename":"io缓冲区漫游-hello-world-advanced.md",
 		"update":"2026-09-03",
+		"id":"3d0581e7-4ffc-80dc-9865-fcc371184161",
 		"collection":"编程漫游",
+		"title":"IO缓冲区漫游—Hello World Advanced",
 		"excerpt":"读了zig的hello world[https://course.ziglang.cc/hello-...",
 		"tags":"技术"
 	},
@@ -30,32 +30,32 @@
 		"tags":"工具,AI"
 	},
 	{
-		"id":"3c4581e7-4ffc-80d3-95e4-d6d3fcc4441c",
-		"filename":"pi-package和extension.md",
-		"title":"PI-Package和Extension",
 		"date":"2026-08-22",
+		"filename":"pi-package和extension.md",
 		"update":"2026-09-03",
+		"id":"3c4581e7-4ffc-80d3-95e4-d6d3fcc4441c",
 		"collection":"PI-Agent",
+		"title":"PI-Package和Extension",
 		"excerpt":"package 本质是一个普通 npm 包。专门用来打包分发PI的skills、prompts、th...",
 		"tags":"AI,工具"
 	},
 	{
-		"id":"3c4581e7-4ffc-8056-a924-c79efcf8dadf",
-		"filename":"pi-agent-mcp-连接-godot-ai.md",
-		"title":"pi-agent MCP 连接 GODOT-AI",
 		"date":"2026-08-22",
+		"filename":"pi-agent-mcp-连接-godot-ai.md",
 		"update":"2026-09-03",
+		"id":"3c4581e7-4ffc-8056-a924-c79efcf8dadf",
 		"collection":"PI-Agent",
+		"title":"pi-agent MCP 连接 GODOT-AI",
 		"excerpt":"# **在GODOT中安装godot-ai插件**\n\n**GODOT-AI 基于UV，确保 uv 已...",
 		"tags":"工具,AI"
 	},
 	{
-		"id":"3fb9dcb2-1f3c-4f24-aec8-c2a469823bba",
-		"filename":"cpp结构体漫游.md",
-		"title":"cpp结构体漫游",
 		"date":"2026-08-16",
+		"filename":"cpp结构体漫游.md",
 		"update":"2026-09-03",
+		"id":"3fb9dcb2-1f3c-4f24-aec8-c2a469823bba",
 		"collection":"编程漫游",
+		"title":"cpp结构体漫游",
 		"excerpt":"前情提要：C和C++是不同的语言，早已不是超集的简单关系，并且渐行渐远。\n\n从结构体管中窥豹。\n\n#...",
 		"tags":"技术"
 	},
@@ -202,12 +202,12 @@
 		"tags":"技术"
 	},
 	{
-		"id":"2bf581e7-4ffc-80de-add5-c801f6370189",
-		"filename":"c语言包管理漫谈.md",
-		"title":"C语言包管理漫谈",
 		"date":"2025-12-04",
+		"filename":"c语言包管理漫谈.md",
 		"update":"2026-09-03",
+		"id":"2bf581e7-4ffc-80de-add5-c801f6370189",
 		"collection":"编程漫游",
+		"title":"C语言包管理漫谈",
 		"excerpt":"任何语言都离不开包管理，C也不例外。\n\n谈起包包管理器、构建工具。我自然地想起Java的maven；...",
 		"tags":"技术,Linux"
 	},
@@ -221,12 +221,12 @@
 		"tags":"技术,Linux,避坑"
 	},
 	{
-		"id":"2b1581e7-4ffc-80dc-892e-d6c7bbea00fa",
-		"filename":"令人迷惑的引用-指针永远不会安全.md",
-		"title":"令人迷惑的引用-指针永远不会安全",
 		"date":"2025-11-20",
+		"filename":"令人迷惑的引用-指针永远不会安全.md",
 		"update":"2026-09-03",
+		"id":"2b1581e7-4ffc-80dc-892e-d6c7bbea00fa",
 		"collection":"编程漫游",
+		"title":"令人迷惑的引用-指针永远不会安全",
 		"excerpt":"Java发展自C++，没有了指针，取而代之的是引用。用官方的说法是：引用是安全的指针。\n\n这一步好的...",
 		"tags":"避坑"
 	},
@@ -249,12 +249,12 @@
 		"tags":"读书"
 	},
 	{
-		"id":"29a581e7-4ffc-80f2-9fec-e0460db9f96f",
-		"filename":"图型库的辨析.md",
-		"title":"图型库的辨析",
 		"date":"2025-10-28",
+		"filename":"图型库的辨析.md",
 		"update":"2026-09-03",
+		"id":"29a581e7-4ffc-80f2-9fec-e0460db9f96f",
 		"collection":"编程漫游",
+		"title":"图型库的辨析",
 		"excerpt":"你用过”图形库“吗？\n\n跟过voidmatrix做游戏的人一定也用到easyX，SDL等图形库，而开...",
 		"tags":"技术"
 	},
@@ -286,12 +286,12 @@
 		"tags":"技术,避坑"
 	},
 	{
-		"id":"288581e7-4ffc-8006-afac-c4a083b7ad2d",
-		"filename":"警惕编程语言饭圈.md",
-		"title":"警惕编程语言饭圈",
 		"date":"2025-10-10",
+		"filename":"警惕编程语言饭圈.md",
 		"update":"2026-09-03",
+		"id":"288581e7-4ffc-8006-afac-c4a083b7ad2d",
 		"collection":"编程漫游",
+		"title":"警惕编程语言饭圈",
 		"excerpt":"开撕、站队、塌房。技术圈里也有人爱玩这一套？搞技术的人相对来说更加理智客观一些，但无奈出校崇拜是人类...",
 		"tags":"技术"
 	},
