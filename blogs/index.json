@@ -1,11 +1,11 @@
 [
 	{
-		"id":"3db581e7-4ffc-80ae-8cfc-ea516c454768",
-		"filename":"字符串漫游.md",
-		"title":"字符串漫游",
 		"date":"2026-09-15",
+		"filename":"字符串漫游.md",
 		"update":"2026-09-15",
+		"id":"3db581e7-4ffc-80ae-8cfc-ea516c454768",
 		"collection":"编程漫游",
+		"title":"字符串漫游",
 		"excerpt":"# C风格字符串 cstr\n\n我们都知道：C语言并没有真正的字符串，所有字符串都是字符数组；声明一个...",
 		"tags":"技术,博客"
 	},
