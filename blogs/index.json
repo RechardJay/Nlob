@@ -1,21 +1,31 @@
 [
 	{
-		"date":"2026-09-15",
-		"filename":"字符串漫游.md",
-		"update":"2026-09-15",
+		"id":"3e5581e7-4ffc-80be-9011-cac89ee7a331",
+		"filename":"pi源码导论.md",
+		"title":"PI源码导论",
+		"date":"2026-09-24",
+		"update":"2026-09-24",
+		"collection":"PI-Agent",
+		"excerpt":"[pi仓库](https://github.com/earendil-works/pi)采用经典的m...",
+		"tags":"技术,工具,AI"
+	},
+	{
 		"id":"3db581e7-4ffc-80ae-8cfc-ea516c454768",
-		"collection":"编程漫游",
+		"filename":"字符串漫游.md",
 		"title":"字符串漫游",
+		"date":"2026-09-15",
+		"update":"2026-09-24",
+		"collection":"编程漫游",
 		"excerpt":"# C风格字符串 cstr\n\n我们都知道：C语言并没有真正的字符串，所有字符串都是字符数组；声明一个...",
 		"tags":"技术,博客"
 	},
 	{
-		"date":"2026-09-03",
-		"filename":"io缓冲区漫游-hello-world-advanced.md",
-		"update":"2026-09-03",
 		"id":"3d0581e7-4ffc-80dc-9865-fcc371184161",
-		"collection":"编程漫游",
+		"filename":"io缓冲区漫游-hello-world-advanced.md",
 		"title":"IO缓冲区漫游—Hello World Advanced",
+		"date":"2026-09-03",
+		"update":"2026-09-24",
+		"collection":"编程漫游",
 		"excerpt":"读了zig的hello world[https://course.ziglang.cc/hello-...",
 		"tags":"技术"
 	},
@@ -41,16 +51,6 @@
 	},
 	{
 		"date":"2026-08-22",
-		"filename":"pi-package和extension.md",
-		"update":"2026-09-03",
-		"id":"3c4581e7-4ffc-80d3-95e4-d6d3fcc4441c",
-		"collection":"PI-Agent",
-		"title":"PI-Package和Extension",
-		"excerpt":"package 本质是一个普通 npm 包。专门用来打包分发PI的skills、prompts、th...",
-		"tags":"AI,工具"
-	},
-	{
-		"date":"2026-08-22",
 		"filename":"pi-agent-mcp-连接-godot-ai.md",
 		"update":"2026-09-03",
 		"id":"3c4581e7-4ffc-8056-a924-c79efcf8dadf",
@@ -58,6 +58,16 @@
 		"title":"pi-agent MCP 连接 GODOT-AI",
 		"excerpt":"# **在GODOT中安装godot-ai插件**\n\n**GODOT-AI 基于UV，确保 uv 已...",
 		"tags":"工具,AI"
+	},
+	{
+		"id":"3c4581e7-4ffc-80d3-95e4-d6d3fcc4441c",
+		"filename":"pi-package和extension.md",
+		"title":"PI-Package和Extension",
+		"date":"2026-08-22",
+		"update":"2026-09-24",
+		"collection":"PI-Agent",
+		"excerpt":"package 本质是一个普通 npm 包。专门用来打包分发PI的skills、prompts、th...",
+		"tags":"AI,工具"
 	},
 	{
 		"date":"2026-08-16",

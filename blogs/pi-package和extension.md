@@ -8,7 +8,7 @@ package 本质是一个普通 npm 包。专门用来打包分发PI的skills、pr
 
 Package 最常见的内容就是安装第三方的Extension。
 
-扩展Extension是PI定制化和强大的根源。Package则让快速获得这些能力。如果你决定现有package不够强大、不够定制化，考虑自己（让PI）开发，独属于你工作流的扩展。
+扩展Extension是PI定制化和强大的根源。Package则让快速获得这些能力。如果你觉得现有package不够强大、不够定制化，考虑自己（让PI）开发，独属于你工作流的扩展。
 
 # 安装扩展
 
@@ -20,8 +20,20 @@ Package 最常见的内容就是安装第三方的Extension。
 
 卸载使用 `pi uninstall`
 
-# 推荐一些扩展
+## 推荐一些扩展
 
 [计划模式](https://pi.dev/packages/@narumitw/pi-plan-mode?name=plan)
 
 [网络搜索](https://pi.dev/packages/pi-web-access)
+
+# 配置命令
+
+[https://pistudy.com.cn/cheatsheet/](https://pistudy.com.cn/cheatsheet/)
+
+pi config  启用/禁用包内资源
+
+pi list 列出已安装的包
+
+pi install <来源> [-l] 安装扩展/技能/主题包
+
+pi remove <来源> [-l]
