@@ -1,11 +1,11 @@
 [
 	{
-		"id":"3e7581e7-4ffc-802f-a098-c04d2eec9874",
-		"filename":"pi-命令详解.md",
-		"title":"PI 命令详解",
 		"date":"2026-09-26",
+		"filename":"pi-命令详解.md",
 		"update":"2026-09-26",
+		"id":"3e7581e7-4ffc-802f-a098-c04d2eec9874",
 		"collection":"PI-Agent",
+		"title":"PI 命令详解",
 		"excerpt":"本文主要关注pi的 /commad ，即斜杠命令。但这不是[命令速查表](https://pistu...",
 		"tags":"AI,工具,技术"
 	},
